@@ -1,0 +1,4 @@
+{"_id":{"$oid":"61b652cdac0f000055001306"},"name":"Live Music","genre":["Electornic / Dance","Hip Hop","Reggae"]}
+{"_id":{"$oid":"61b652e0ac0f000055001307"},"name":"Arts","genre":["Theatre","Opera / Classical / Choir","Poetry / Spoken Word","Comedy","Film"]}
+{"_id":{"$oid":"61b652e8ac0f000055001308"},"name":"Culture","genre":["Exhibition / Expo","Charity / Fund Raiser","Eduactional / PD / Workshop","Sports","Fashion","Singles events","Other"]}
+{"_id":{"$oid":"61b652f1ac0f00005500130a"},"name":"Festivals"}

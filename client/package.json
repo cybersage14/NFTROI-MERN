@@ -1,0 +1,92 @@
+{
+  "name": "Trave",
+  "author": "gurulucky",
+  "version": "2.4.0",
+  "private": true,
+  "scripts": {
+    "start": "set \"GENERATE_SOURCEMAP=false\" && react-scripts start",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@auth0/auth0-spa-js": "^1.17.0",
+    "@emotion/cache": "^11.4.0",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@iconify/icons-ant-design": "^1.1.0",
+    "@iconify/icons-eva": "^1.1.0",
+    "@iconify/icons-ic": "^1.1.8",
+    "@iconify/react": "^1.1.4",
+    "@mui/icons-material": "^5.3.0",
+    "@mui/lab": "^5.0.0-alpha.62",
+    "@mui/material": "^5.2.2",
+    "@mui/styles": "^5.4.4",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@walletconnect/web3-provider": "^1.7.8",
+    "@web3auth/web3auth": "^0.9.3",
+    "apexcharts": "^3.35.0",
+    "axios": "^0.21.1",
+    "currency-list": "^1.0.8",
+    "date-fns": "^2.28.0",
+    "ethers": "^5.6.2",
+    "framer-motion": "^4.1.17",
+    "jsonwebtoken": "^8.5.1",
+    "jss": "^10.7.1",
+    "jss-rtl": "^0.3.0",
+    "jwt-decode": "^3.1.2",
+    "lazysizes": "^5.3.2",
+    "lodash": "^4.17.21",
+    "magic-sdk": "^7.0.0",
+    "moralis": "^1.4.0",
+    "nprogress": "^0.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-apexcharts": "^1.4.0",
+    "react-dom": "^17.0.2",
+    "react-helmet-async": "^1.2.3",
+    "react-i18next": "^11.15.5",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-intersection-observer": "^8.33.1",
+    "react-moralis": "^1.3.5",
+    "react-notifications": "^1.7.3",
+    "react-redux": "^7.2.4",
+    "react-router": "^6.0.0-beta.0",
+    "react-router-dom": "^6.0.0-beta.0",
+    "react-scripts": "4.0.0",
+    "react-scroll": "^1.8.3",
+    "react-select": "^5.3.2",
+    "react-select-currency": "^1.0.7",
+    "react-slick": "^0.29.0",
+    "redux": "^4.1.1",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.1",
+    "simplebar-react": "^2.3.6",
+    "slick-carousel": "^1.8.1",
+    "stylis-plugin-rtl": "^2.1.1",
+    "typescript": "^4.3.5",
+    "web-vitals": "^2.1.0",
+    "web3": "^1.7.1"
+  }
+}

@@ -1,0 +1,9 @@
+export const SET_AUTH = 'SET_AUTH'
+export const SET_STATUS = 'SET_STATUS';
+export const SET_WALLET = 'SET_WALLET';
+export const SET_SEARCH = 'SET_SEARCH'
+export const SET_MODAL = 'SET_MODAL'
+export const SET_BALANCE = 'SET_BALANCE'
+export const SET_STATS = 'SET_STATS'
+export const SET_NFTS = 'SET_NFTS'
+export const SET_TRANSACTIONS = 'SET_TRANSACTIONS'

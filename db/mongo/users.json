@@ -1,0 +1,1 @@
+{"_id":{"$oid":"61bba0e928b45f2954ad327d"},"firstName":"guru","lastName":"lucky","phone":4567,"email":"guruluckystacker@gmail.com","password":"$2a$10$YfnOlWOw13YEmCB4ai8u8uxkb6gODEgol7buDr1HaHfP8HLejUya.","date":{"$date":"2021-12-16T20:26:17.132Z"},"__v":0}
