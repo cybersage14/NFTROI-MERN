@@ -12,7 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell'
+import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
@@ -23,9 +23,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { visuallyHidden } from '@mui/utils';
-import { FormGroup, FormControlLabel, Checkbox, Stack, Avatar, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import { StyledHeaderCell, StyledBodyCell, StyledTableRow } from '../StyledComponent'
+import { FormGroup, FormControlLabel, Checkbox, Stack, Avatar, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { StyledHeaderCell, StyledBodyCell, StyledTableRow } from '../StyledComponent';
+import { URL_TRANSACTION } from '../../utils/constants';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -286,7 +287,7 @@ function ActionCell({ action }) {
         </>
       }
     </Stack>
-  )
+  );
 }
 
 function PLCell({ value, icon, bgColor }) {
@@ -295,7 +296,7 @@ function PLCell({ value, icon, bgColor }) {
       <Typography variant='body2'>{value}</Typography>
       <Box component='img' src={icon} width='36px' height='36px' />
     </Stack>
-  )
+  );
 }
 
 function Row(props) {
@@ -330,7 +331,15 @@ function Row(props) {
               </IconButton>
             }
             <Avatar src={row.image} width="48px" height="48px" sx={{ border: `3px solid ${row.pl >= 0 ? '#5CDD90' : '#DD5C5C'}` }} />
-            <Typography variant='body2'>
+            {console.log('# row => ', row)}
+            <Typography
+              variant='body2'
+              component="a"
+              href={`${URL_TRANSACTION}/${row.hash}`}
+              target="_blank"
+              color="white"
+              sx={{ textDecoration: 'none' }}
+            >
               {row.count > 1 ? `${row.name} x${row.count}` : row.name}
             </Typography>
           </Stack>
@@ -388,10 +397,13 @@ function Row(props) {
                         borderTop: '10px solid #121b3c',
                         borderBottom: '10px solid #121b3c'
                       }}>
+                        {console.log('# item => ', item)}
                         <StyledBodyCell align="left">
                           <Stack direction='row' spacing={2} alignItems='center'>
                             <Avatar src={item.image} width="48px" height="48px" sx={{ border: `3px solid ${row.pl >= 0 ? '#5CDD90' : '#DD5C5C'}` }} />
-                            <Typography variant='body2'>
+                            <Typography
+                              variant='body2'
+                            >
                               {item.name}
                             </Typography>
                           </Stack>
@@ -416,49 +428,49 @@ export default function TransactionTable({ transactions }) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [filter, setFilter] = useState(['ALL'])
-  const [filteredTransactions, setFilteredTransactions] = useState([])
+  const [filter, setFilter] = useState(['ALL']);
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
 
   useEffect(() => {
-    setFilteredTransactions([...transactions])
-  }, [transactions])
+    setFilteredTransactions([...transactions]);
+  }, [transactions]);
 
   const changeFilter = (e) => {
     if (e.target.checked) {
       if (filter.indexOf(e.target.name) === -1) {
-        let newFilter
+        let newFilter;
         if (e.target.name === 'ALL') {
-          newFilter = ['ALL']
-          setFilter(newFilter)
+          newFilter = ['ALL'];
+          setFilter(newFilter);
         } else {
-          newFilter = [...filter.filter(item => item !== 'ALL'), e.target.name]
-          setFilter()
+          newFilter = [...filter.filter(item => item !== 'ALL'), e.target.name];
+          setFilter();
         }
-        setFilter(newFilter)
+        setFilter(newFilter);
         setFilteredTransactions(transactions.filter(item => {
           if (newFilter.indexOf('ALL') >= 0) {
-            return true
+            return true;
           }
           if (newFilter.indexOf(item.action) >= 0) {
-            return true
+            return true;
           }
-          return false
-        }))
+          return false;
+        }));
       }
     } else {
-      let newFilter = filter.filter(item => item !== e.target.name)
-      setFilter(newFilter)
+      let newFilter = filter.filter(item => item !== e.target.name);
+      setFilter(newFilter);
       setFilteredTransactions(transactions.filter(item => {
         if (newFilter.indexOf('ALL') >= 0) {
-          return true
+          return true;
         }
         if (newFilter.indexOf(item.action) >= 0) {
-          return true
+          return true;
         }
-        return false
-      }))
+        return false;
+      }));
     }
-  }
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';

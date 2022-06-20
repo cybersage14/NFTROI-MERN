@@ -13,6 +13,8 @@ export const COLOR_SECONDARY = grey[700];
 export const COLOR_SECONDARY_BRIGHT = grey[500];
 export const COLOR_BG_TEXTFIELD = grey[900];
 export const COLOR_BORDER_GRADIENT_BOTTOM = '#131315';
-export const COLOR_BORDER_GRADIENT_TOP = 'rgba(255, 255, 255, 0.2)'
+export const COLOR_BORDER_GRADIENT_TOP = 'rgba(255, 255, 255, 0.2)';
 
-export const BORDER_RADIUS_TEXTFIELD = '8px'
+export const BORDER_RADIUS_TEXTFIELD = '8px';
+
+export const URL_TRANSACTION = 'https://etherscan.io/tx';
