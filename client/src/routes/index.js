@@ -6,6 +6,7 @@ import MainLayout from '../layouts/main';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 import GuestGuard from '../guards/GuestGuard';
+import Home from '../pages/Home';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component) => (props) => {
@@ -39,51 +40,51 @@ export default function Router() {
     // Main Routes
     {
       path: '/',
-      element:<MainLayout />,
+      element: <MainLayout />,
       children: [
         {
           path: '/',
-          element: <Portfolio />
+          element: <Home />
         },
         {
           path: '/portfolio',
-          element: 
-          // <GuestGuard>
+          element:
+            // <GuestGuard>
             <Portfolio />
           // </GuestGuard>
         },
         {
           path: '/portfolio/:address',
-          element: 
-          // <GuestGuard>
+          element:
+            // <GuestGuard>
             <Portfolio />
           // </GuestGuard>
         },
         {
           path: '/nft/:address/:tokenId',
-          element: 
-          <GuestGuard>
-            <SingleAsset />
-          </GuestGuard>
+          element:
+            <GuestGuard>
+              <SingleAsset />
+            </GuestGuard>
         },
         {
           path: '/collection/:address',
-          element: 
-          // <GuestGuard>
+          element:
+            // <GuestGuard>
             <Collection />
           // </GuestGuard>
         },
         {
           path: '/collections',
-          element: 
-          // <GuestGuard>
+          element:
+            // <GuestGuard>
             <Collections />
           // </GuestGuard>
         },
         {
           path: '/converter',
-          element: 
-          // <GuestGuard>
+          element:
+            // <GuestGuard>
             <Converter />
           // </GuestGuard>
         },

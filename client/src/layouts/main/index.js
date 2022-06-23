@@ -8,6 +8,7 @@ import Logo from '../../components/Logo';
 //
 import MainNavbar from './MainNavbar';
 import MainFooter from './MainFooter';
+import MainTopNavbar from './MainTopNavbar';
 
 // ----------------------------------------------------------------------
 
@@ -17,12 +18,10 @@ export default function MainLayout() {
 
   return (
     <>
-      <MainNavbar />
+      <MainTopNavbar />
       <div>
         <Outlet />
       </div>
-
-      
     </>
   );
 }

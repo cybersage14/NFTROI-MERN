@@ -18,3 +18,5 @@ export const COLOR_BORDER_GRADIENT_TOP = 'rgba(255, 255, 255, 0.2)';
 export const BORDER_RADIUS_TEXTFIELD = '8px';
 
 export const URL_TRANSACTION = 'https://etherscan.io/tx';
+
+export const FONT_FAMILY_PRIMARY = "'Poppins', sans-serif";

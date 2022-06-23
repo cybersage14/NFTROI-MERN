@@ -6,7 +6,8 @@ import {
   COLOR_BORDER_GRADIENT_BOTTOM,
   COLOR_BORDER_GRADIENT_TOP,
   COLOR_PRIMARY_GRADIENT_LEFT,
-  COLOR_PRIMARY_GRADIENT_RIGHT
+  COLOR_PRIMARY_GRADIENT_RIGHT,
+  COLOR_SECONDARY
 } from "../utils/constants";
 
 export const PrimaryTextField = styled(TextField)(({ theme }) => ({
@@ -22,5 +23,14 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
 }));
 
 export const PrimaryButton = styled(Button)(({ theme }) => ({
-  backgroundImage: `linear-gradient(to right, ${COLOR_PRIMARY_GRADIENT_LEFT}, ${COLOR_PRIMARY_GRADIENT_RIGHT})`
+  backgroundImage: `linear-gradient(to right, ${COLOR_PRIMARY_GRADIENT_LEFT}, ${COLOR_PRIMARY_GRADIENT_RIGHT})`,
+  color: 'white',
+  fontWeight: 400
+}));
+
+export const SecondaryButton = styled(Button)(({ theme }) => ({
+  color: 'white',
+  border: `2px solid ${COLOR_SECONDARY}`,
+  background: 'rgba(0, 0, 0, 0)',
+  fontWeight: 400
 }));
