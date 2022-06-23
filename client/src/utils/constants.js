@@ -20,3 +20,13 @@ export const BORDER_RADIUS_TEXTFIELD = '8px';
 export const URL_TRANSACTION = 'https://etherscan.io/tx';
 
 export const FONT_FAMILY_PRIMARY = "'Poppins', sans-serif";
+
+export const FONT_SIZE_H1_DESKTOP = 38;
+export const FONT_SIZE_H2_DESKTOP = 28;
+export const FONT_SIZE_H3_DESKTOP = 22;
+export const FONT_SIZE_BODY_DESKTOP = 15;
+
+export const FONT_WEIGHT_BOLD = 700;
+export const FONT_WEIGHT_SEMIBOLD = 600;
+export const FONT_WEIGHT_NORMAL = 500;
+export const FONT_WEIGHT_THIN = 400;

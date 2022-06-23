@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Box } from '@mui/material';
+import HeroSection from './HeroSection';
 
 export default function Home() {
   return (
-    <Container maxWidth="xl">
-      
-    </Container>
-  )
+    <Box>
+      <HeroSection />
+    </Box>
+  );
 }
