@@ -56,6 +56,7 @@ export default function Home() {
           position="absolute"
           right={0}
           zIndex={20}
+          sx={{ display: { xs: 'none', md: 'block' } }}
         />
       </Box>
 
@@ -106,6 +107,7 @@ export default function Home() {
           top="20%"
           right={0}
           zIndex={20}
+          sx={{ display: { xs: 'none', md: 'block' } }}
         />
       </Box>
       <MainBottomNavbar />
