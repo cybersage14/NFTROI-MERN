@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Grid, Typography, Box, InputAdornment, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
+import { getAddressType } from '../../lib/block';
 import {
   COLOR_SECONDARY_BRIGHT,
   FONT_SIZE_H2_DESKTOP,
@@ -9,6 +12,40 @@ import {
 import { PrimaryButton, PrimaryTextField } from '../../components/customComponents';
 
 export default function TrackSection({ sx }) {
+  const navigate = useNavigate();
+  const [address, setAddress] = useState('');
+
+  const getDataOfAddress = async () => {
+    let type = await getAddressType(address.split('/')[0]);
+    switch (type) {
+      case 'contract':
+        if (address.split('/').length > 1) {
+          navigate(`/nft/${address}`, { replace: true });
+        } else {
+          navigate(`/collection/${address}`, { replace: true });
+        }
+        break;
+      case 'account':
+        navigate(`/portfolio/${address}`, { replace: true });
+        break;
+      case 'invalid':
+        NotificationManager.error('Please input valid address');
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const keyPress = async (e) => {
+    if (e.keyCode === 13) {
+      await getDataOfAddress();
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    setAddress(e.target.value);
+  };
   return (
     <Container maxWidth="xl" sx={{ ...sx }}>
       <Grid
@@ -83,12 +120,14 @@ export default function TrackSection({ sx }) {
                   ),
                   endAdornment: (
                     <InputAdornment position="end">
-                      <PrimaryButton variant="contained">
+                      <PrimaryButton variant="contained" onClick={getDataOfAddress}>
                         Analyze
                       </PrimaryButton>
                     </InputAdornment>
                   )
                 }}
+                onKeyDown={keyPress}
+                onChange={handleSearchChange}
                 fullWidth
               />
             </Box>

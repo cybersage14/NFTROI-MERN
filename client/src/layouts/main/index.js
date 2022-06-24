@@ -18,8 +18,8 @@ export default function MainLayout() {
 
   return (
     <>
-      {/* <MainTopNavbar /> */}
-      <MainNavbar />
+      <MainTopNavbar />
+      {/* <MainNavbar /> */}
       <div>
         <Outlet />
       </div>
