@@ -7,6 +7,7 @@ import StaySection from './StaySection';
 import TrackSection from './TrackSection';
 import NftConverterSection from './NftConverterSection';
 import PortfolioSection from './PortfolioSection';
+import CompareSection from './CompareSection';
 
 export default function Home() {
   return (
@@ -64,7 +65,7 @@ export default function Home() {
           py={20}
         >
           <PortfolioSection sx={{ pt: 10 }} />
-          <TrackSection sx={{ mt: 40 }} />
+          <CompareSection sx={{ mt: 40 }} />
         </Box>
       </Box>
     </Box>
