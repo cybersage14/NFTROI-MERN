@@ -15,12 +15,12 @@ export default function Home() {
     <Box>
       <HeroSection />
       <Box
-        mt={12}
+        mt={{ xs: 0, md: 12}}
         sx={{
           background: 'url(/assets/images/bg-wave-1.png) no-repeat',
-          backgroundSize: 'contain'
+          backgroundSize: { xs: 'auto', md: 'contain' }
         }}
-        pt={70}
+        pt={{ xs: 35, md: 70 }}
         position="relative"
       >
         <ProfitSection />

@@ -70,7 +70,7 @@ export default function HeroSection() {
           </Grid>
         </Grid>
       </Box>
-      <Stack direction="row" justifyContent="center" width="100%" mt={12}>
+      <Stack direction="row" justifyContent="center" width="100%" mt={{ xs: 6, md: 12 }}>
         <IconButton>
           <KeyboardArrowDown sx={{ color: COLOR_WHITE, fontSize: FONT_SIZE_H1_DESKTOP }} />
         </IconButton>
