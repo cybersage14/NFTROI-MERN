@@ -45,12 +45,23 @@ const CustomizedDrawer = styled(Drawer)`
 export default function MainTopNavbar() {
   const { pathname } = useLocation();
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [bgColorOfAppBar, setBgColorOfAppBar] = useState('rgba(10, 10, 10, 0)');
 
+  const toggleBgColorOfAppBar = () => {
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 1) {
+      setBgColorOfAppBar('#121212');
+    }
+    else if (scrolled <= 1) {
+      setBgColorOfAppBar('rgba(10, 10, 10, 0)');
+    }
+  };
+  window.addEventListener('scroll', toggleBgColorOfAppBar);
   return (
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: 'rgba(10, 10, 10, 0)',
+        backgroundColor: bgColorOfAppBar,
         py: { md: 1 },
       }}>
       <Container maxWidth="xl">
