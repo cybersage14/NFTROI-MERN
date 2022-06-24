@@ -55,40 +55,31 @@ export default function TrackSection({ sx }) {
         spacing={{ xs: 6, md: 0 }}
       >
         <Grid item xs={12} sm={6} md={5}>
-          <Box position="relative">
+          <Box position="relative" width="fit-content">
             <Box
               component="img"
-              src="assets/images/elipse-gradient.png"
+              src="assets/images/track-image.png"
               alt=""
+              zIndex={10}
             />
-            <Box position="absolute" top={0}>
-              <Box position="relative">
-                <Box
-                  component="img"
-                  src="assets/images/track-image.png"
-                  alt=""
-                  zIndex={10}
-                />
-                <Box
-                  component="img"
-                  src="assets/images/dot.png"
-                  alt=""
-                  position="absolute"
-                  top="15%"
-                  right="15%"
-                  zIndex={20}
-                />
-                <Box
-                  component="img"
-                  src="assets/images/dot-small.png"
-                  alt=""
-                  position="absolute"
-                  bottom="17%"
-                  left="15%"
-                  zIndex={20}
-                />
-              </Box>
-            </Box>
+            <Box
+              component="img"
+              src="assets/images/dot.png"
+              alt=""
+              position="absolute"
+              top="15%"
+              right="15%"
+              zIndex={20}
+            />
+            <Box
+              component="img"
+              src="assets/images/dot-small.png"
+              alt=""
+              position="absolute"
+              bottom="17%"
+              left="15%"
+              zIndex={20}
+            />
           </Box>
         </Grid>
         <Grid item xs={12} sm={12} md={2} sx={{ display: { xs: 'none', md: 'block' } }} />

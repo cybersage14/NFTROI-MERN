@@ -52,6 +52,6 @@ export default function NftRealTimeSection({ sx }) {
           </Stack>
         </Grid>
       </Grid>
-    </Container >
+    </Container>
   );
 }

@@ -48,7 +48,7 @@ export default function CompareSection({ sx }) {
         <Grid item xs={12} sm={6} md={5}>
           <Stack direction="row" justifyContent="end">
             <Box position="relative" width="fit-content">
-              <Box component="img" src="assets/images/vs-frames.png" alt="" />
+              <Box component="img" src="assets/images/vs-frames.svg" alt="" />
               <Box position="absolute" top="30%" left="15%">
                 <Box
                   component="img"
