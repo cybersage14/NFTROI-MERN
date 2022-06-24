@@ -10,8 +10,8 @@ import { PrimaryButton } from '../../components/customComponents';
 
 export default function StaySection({ sx }) {
   return (
-    <Container maxWidth="xl" sx={{ pt: 30 }}>
-      <Grid container>
+    <Container maxWidth="xl" sx={{ ...sx }}>
+      <Grid container alignItems="center">
         <Grid item xs={12} sm={6} md={5}>
           <Typography fontSize={FONT_SIZE_H2_DESKTOP} fontWeight={FONT_WEIGHT_NORMAL}>
             Stay on Top of Expenses
@@ -34,7 +34,7 @@ export default function StaySection({ sx }) {
         <Grid item xs={12} sm={12} md={2} />
         <Grid item xs={12} sm={6} md={5}>
           <Stack direction="row" justifyContent="end">
-            <Box component="img" src="assets/images/stay-image.png" alt="" sx={{ ...sx }} />
+            <Box component="img" src="assets/images/stay-image.png" alt="" />
           </Stack>
         </Grid>
       </Grid>
