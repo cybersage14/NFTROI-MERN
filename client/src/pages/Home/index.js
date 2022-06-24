@@ -51,7 +51,7 @@ export default function Home() {
           py={{ xs: 10, md: 20 }}
         >
           <StaySection />
-          <TrackSection sx={{ mt: 40 }} />
+          <TrackSection sx={{ mt: { xs: 20, md: 40} }} />
         </Box>
 
         <Box component="img" src="assets/images/wave.png" alt="" width="100%" mt={20} zIndex={5} />

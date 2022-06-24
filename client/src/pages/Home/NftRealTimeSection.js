@@ -10,7 +10,7 @@ import { PrimaryButton } from '../../components/customComponents';
 
 export default function NftRealTimeSection({ sx }) {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ ...sx }}>
       <Grid
         container
         alignItems="center"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Typography, Box, InputAdornment } from '@mui/material';
+import { Container, Grid, Typography, Box, InputAdornment, Stack } from '@mui/material';
 import {
   COLOR_SECONDARY_BRIGHT,
   FONT_SIZE_H2_DESKTOP,
@@ -11,7 +11,12 @@ import { PrimaryButton, PrimaryTextField } from '../../components/customComponen
 export default function TrackSection({ sx }) {
   return (
     <Container maxWidth="xl" sx={{ ...sx }}>
-      <Grid container alignItems="center">
+      <Grid
+        container
+        alignItems="center"
+        flexDirection={{ xs: 'column-reverse', sm: 'row' }}
+        spacing={{ xs: 6, md: 0 }}
+      >
         <Grid item xs={12} sm={6} md={5}>
           <Box position="relative">
             <Box
@@ -49,34 +54,45 @@ export default function TrackSection({ sx }) {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={12} md={2} />
+        <Grid item xs={12} sm={12} md={2} sx={{ display: { xs: 'none', md: 'block' } }} />
         <Grid item xs={12} sm={6} md={5}>
-          <Typography fontSize={FONT_SIZE_H2_DESKTOP} fontWeight={FONT_WEIGHT_NORMAL}>
+          <Typography
+            fontSize={FONT_SIZE_H2_DESKTOP}
+            fontWeight={FONT_WEIGHT_NORMAL}
+            textAlign={{ xs: 'center', md: 'left' }}
+          >
             Track celebs’ wallets
           </Typography>
-          <Typography fontSize={FONT_SIZE_H3_DESKTOP} color={COLOR_SECONDARY_BRIGHT} mt={2}>
+          <Typography
+            fontSize={FONT_SIZE_H3_DESKTOP}
+            color={COLOR_SECONDARY_BRIGHT}
+            mt={2}
+            textAlign={{ xs: 'center', md: 'left' }}
+          >
             Want to see what your favorite Celebs are into when it comes to buying, trading, or minting? We can help you track their wallets so you can follow their lead!
           </Typography>
-          <Box width="90%" mt={3}>
-            <PrimaryTextField
-              placeholder="Put your wallet address here"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Box component="img" src="assets/images/person-2-rectangle.png" alt="" />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <PrimaryButton variant="contained">
-                      Analyze
-                    </PrimaryButton>
-                  </InputAdornment>
-                )
-              }}
-              fullWidth
-            />
-          </Box>
+          <Stack direction="row" justifyContent={{ xs: 'center', md: 'start' }}>
+            <Box width="90%" mt={3}>
+              <PrimaryTextField
+                placeholder="Put your wallet address here"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Box component="img" src="assets/images/person-2-rectangle.png" alt="" />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <PrimaryButton variant="contained">
+                        Analyze
+                      </PrimaryButton>
+                    </InputAdornment>
+                  )
+                }}
+                fullWidth
+              />
+            </Box>
+          </Stack>
         </Grid>
       </Grid>
     </Container>
