@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Typography, Box, Stack } from '@mui/material';
+import { Container, Grid, Typography, Box } from '@mui/material';
 import {
   COLOR_SECONDARY_BRIGHT,
   FONT_SIZE_H2_DESKTOP,

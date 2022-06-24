@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import HeroSection from './HeroSection';
 import ProfitSection from './ProfitSection';
 import NftRealTimeSection from './NftRealTimeSection';
+import StaySection from './StaySection';
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
         mt={12}
         sx={{
           background: 'url(/assets/images/bg-wave-1.png) no-repeat',
-          backgroundSize: 'cover'
+          backgroundSize: 'contain'
         }}
         pt={70}
         position="relative"
@@ -51,12 +52,11 @@ export default function Home() {
         <NftRealTimeSection sx={{ position: 'relative', zIndex: 20 }} />
         <Box
           sx={{
-            background: 'url(/assets/images/bg-wave-1.png) no-repeat',
+            background: 'url(/assets/images/elipse.png) no-repeat',
             backgroundSize: 'cover'
           }}
-          mt={12}
         >
-
+          <StaySection />
         </Box>
       </Box>
     </Box>
