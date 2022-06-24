@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import {
   BORDER_RADIUS_TEXTFIELD,
@@ -33,4 +33,9 @@ export const SecondaryButton = styled(Button)(({ theme }) => ({
   border: `2px solid ${COLOR_SECONDARY}`,
   background: 'rgba(0, 0, 0, 0)',
   fontWeight: 400
+}));
+
+export const ViterousStack = styled(Stack)(({ theme }) => ({
+  background: `linear-gradient(${COLOR_BG_TEXTFIELD}, ${COLOR_BG_TEXTFIELD}) padding-box, linear-gradient(to top, ${COLOR_BORDER_GRADIENT_BOTTOM}, ${COLOR_BORDER_GRADIENT_TOP}) border-box`,
+  border: '1px solid transparent'
 }));

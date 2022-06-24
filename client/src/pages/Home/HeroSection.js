@@ -1,8 +1,17 @@
 import React from 'react';
-import { Box, Grid, Typography, InputAdornment } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Typography,
+  InputAdornment,
+  IconButton,
+  Stack,
+} from '@mui/material';
+import { KeyboardArrowDown } from '@mui/icons-material';
 import {
   COLOR_SECONDARY_BRIGHT,
-  FONT_SIZE_BODY_DESKTOP,
+  COLOR_WHITE,
+  FONT_SIZE_BODY1_DESKTOP,
   FONT_SIZE_H1_DESKTOP
 } from '../../utils/constants';
 import { PrimaryButton, PrimaryTextField } from '../../components/customComponents';
@@ -19,7 +28,7 @@ export default function HeroSection() {
             <Typography fontSize={FONT_SIZE_H1_DESKTOP} fontWeight={700}>
               Measure Your Performance<br /> In The NFT Space With Ease
             </Typography>
-            <Typography fontSize={FONT_SIZE_BODY_DESKTOP} color={COLOR_SECONDARY_BRIGHT} mt={2}>
+            <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY_BRIGHT} mt={2}>
               Our tool helps you understand your NFT investments better through analysis and comprehensive insights!
             </Typography>
             <Box width="70%" mt={5}>
@@ -44,6 +53,11 @@ export default function HeroSection() {
           </Grid>
         </Grid>
       </Box>
+      <Stack direction="row" justifyContent="center" width="100%" mt={12}>
+        <IconButton>
+          <KeyboardArrowDown sx={{ color: COLOR_WHITE, fontSize: FONT_SIZE_H1_DESKTOP }} />
+        </IconButton>
+      </Stack>
     </Box>
   );
 }
