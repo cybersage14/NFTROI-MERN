@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import Web3 from 'web3';
 import {
   AppBar,
   Box,
@@ -15,8 +17,10 @@ import {
   Toolbar,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { NotificationManager } from 'react-notifications';
 import { SecondaryButton } from '../../components/customComponents';
 import { COLOR_SECONDARY_BRIGHT } from '../../utils/constants';
+import { setWallet } from '../../actions/manager';
 
 const ROUTES = [
   {
@@ -42,10 +46,15 @@ const CustomizedDrawer = styled(Drawer)`
   }
 `;
 
+const NETWORK = process.env.REACT_APP_NETWORK;
+const CHAIN_ID = process.env.REACT_APP_MAINNET_ID;
+
 export default function MainTopNavbar() {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [bgColorOfAppBar, setBgColorOfAppBar] = useState('rgba(10, 10, 10, 0)');
+  const [initWeb3, setInitWeb3] = useState(false);
 
   const toggleBgColorOfAppBar = () => {
     const scrolled = document.documentElement.scrollTop;
@@ -57,6 +66,56 @@ export default function MainTopNavbar() {
     }
   };
   window.addEventListener('scroll', toggleBgColorOfAppBar);
+
+  /// window.ethereum used to get addrss
+  const conMetamask = async (e) => {
+    // console.log(e);
+    if (window.ethereum) {
+      const chainId = await window.ethereum.request({
+        method: "eth_chainId"
+      });
+      if (Number(chainId) !== Number(CHAIN_ID)) {
+        console.log(chainId);
+        // dispatch(setModal(true, `Connect to ${NETWORK} network on metamask.`));
+        NotificationManager.warning(`Connect to ${NETWORK} network.`);
+        dispatch(setWallet(''));
+        return;
+      }
+      const accounts = await window.ethereum.enable();
+      dispatch(setWallet(accounts[0]));
+    } else {
+      NotificationManager.warning("Install metamask wallet on your browser");
+    }
+  };
+
+  useEffect(() => {
+    if (window.ethereum && !initWeb3) {
+      setInitWeb3(true);
+      window.web3 = new Web3(window.ethereum);
+
+      window.ethereum.on('accountsChanged', function (accounts) {
+        // if (accounts[0] !== account) {
+        console.log("change", accounts[0]);
+        conMetamask();
+        // }
+      });
+
+      window.ethereum.on('networkChanged', function (networkId) {
+        if (Number(networkId) !== Number(CHAIN_ID)) {
+          dispatch(setWallet(''));
+          // dispatch(setModal(true, `Connect to ${NETWORK} network.`));
+          NotificationManager.warning(`Connect to ${NETWORK} network.`);
+          return;
+        }
+        conMetamask();
+      });
+
+      conMetamask();
+    } else {
+      NotificationManager.warning("Install metamask wallet on your browser");
+    }
+  }, []);
+
   return (
     <AppBar
       position="sticky"
@@ -143,7 +202,7 @@ export default function MainTopNavbar() {
             </Stack>
           </Box>
 
-          <SecondaryButton sx={{ py: 1, px: 2 }}>
+          <SecondaryButton sx={{ py: 1, px: 2 }} onClick={conMetamask}>
             Connect
           </SecondaryButton>
           {/* <SecondaryButton
