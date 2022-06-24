@@ -8,6 +8,7 @@ import TrackSection from './TrackSection';
 import NftConverterSection from './NftConverterSection';
 import PortfolioSection from './PortfolioSection';
 import CompareSection from './CompareSection';
+import MainBottomNavbar from '../../layouts/main/MainBottomNavbar';
 
 export default function Home() {
   return (
@@ -68,6 +69,7 @@ export default function Home() {
           <CompareSection sx={{ mt: 40 }} />
         </Box>
       </Box>
+      <MainBottomNavbar />
     </Box>
   );
 }
