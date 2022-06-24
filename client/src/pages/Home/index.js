@@ -48,7 +48,7 @@ export default function Home() {
             background: 'url(/assets/images/elipse.png) no-repeat',
             backgroundSize: 'contain'
           }}
-          py={20}
+          py={{ xs: 10, md: 20 }}
         >
           <StaySection />
           <TrackSection sx={{ mt: 40 }} />
