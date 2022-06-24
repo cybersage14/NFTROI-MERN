@@ -80,7 +80,7 @@ export default function Home() {
           py={{ xs: 10, md: 20 }}
         >
           <PortfolioSection sx={{ pt: { xs: 5, md: 10 } }} />
-          <CompareSection sx={{ mt: 40 }} />
+          <CompareSection sx={{ mt: { xs: 20, md: 40} }} />
         </Box>
       </Box>
       <MainBottomNavbar />
