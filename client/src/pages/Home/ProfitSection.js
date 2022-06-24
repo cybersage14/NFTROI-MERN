@@ -8,7 +8,7 @@ import {
 } from '../../utils/constants';
 import { PrimaryButton } from '../../components/customComponents';
 
-export default function ProfitSection() {
+export default function ProfitSection({ sx }) {
   return (
     <Container maxWidth="xl">
       <Grid container>
@@ -34,7 +34,7 @@ export default function ProfitSection() {
         <Grid item xs={12} sm={12} md={2} />
         <Grid item xs={12} sm={6} md={5}>
           <Stack direction="row" justifyContent="end">
-            <Box component="img" src="assets/images/profit-image.png" alt="" />
+            <Box component="img" src="assets/images/profit-image.png" alt="" sx={{ ...sx }} />
           </Stack>
         </Grid>
       </Grid>
