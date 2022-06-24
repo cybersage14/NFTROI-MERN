@@ -24,32 +24,49 @@ export default function HeroSection() {
       </Box>
       <Box ml={{ md: 32 }} mt={12} position="relative" zIndex={20}>
         <Grid container alignItems="center">
-          <Grid item xs={12} sm={5} md={5}>
-            <Typography fontSize={FONT_SIZE_H1_DESKTOP} fontWeight={700}>
+          <Grid item xs={12} sm={6} md={5}>
+            <Typography
+              fontSize={FONT_SIZE_H1_DESKTOP}
+              fontWeight={700}
+              textAlign={{ xs: 'center', md: 'left' }}
+            >
               Measure Your Performance<br /> In The NFT Space With Ease
             </Typography>
-            <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY_BRIGHT} mt={2}>
+            <Typography
+              fontSize={FONT_SIZE_BODY1_DESKTOP}
+              color={COLOR_SECONDARY_BRIGHT}
+              textAlign={{ xs: 'center', md: 'left' }}
+              mt={2}
+            >
               Our tool helps you understand your NFT investments better through analysis and comprehensive insights!
             </Typography>
-            <Box width="70%" mt={5}>
-              <PrimaryTextField
-                placeholder="Put your wallet address here"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <PrimaryButton variant="contained">
-                        Analyze
-                      </PrimaryButton>
-                    </InputAdornment>
-                  )
-                }}
-                fullWidth
-              />
-            </Box>
+            <Stack direction="row" justifyContent={{ xs: 'center', md: 'start' }}>
+              <Box width={{ xs: '90%', md: '70%' }} mt={5}>
+                <PrimaryTextField
+                  placeholder="Put your wallet address here"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <PrimaryButton variant="contained">
+                          Analyze
+                        </PrimaryButton>
+                      </InputAdornment>
+                    )
+                  }}
+                  fullWidth
+                />
+              </Box>
+            </Stack>
           </Grid>
-          <Grid item xs={12} sm={2} md={2} />
+          <Grid item xs={12} sm={1} md={2} />
           <Grid item xs={12} sm={5} md={5}>
-            <Box component="img" src="assets/images/hero-laptop.png" alt="" width="100%" />
+            <Box 
+              component="img" 
+              src="assets/images/hero-laptop.png" 
+              alt="" 
+              width="100%" 
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            />
           </Grid>
         </Grid>
       </Box>
