@@ -77,9 +77,9 @@ export default function Home() {
             background: 'url(/assets/images/elipse.png) no-repeat',
             backgroundSize: 'contain'
           }}
-          py={20}
+          py={{ xs: 10, md: 20 }}
         >
-          <PortfolioSection sx={{ pt: 10 }} />
+          <PortfolioSection sx={{ pt: { xs: 5, md: 10 } }} />
           <CompareSection sx={{ mt: 40 }} />
         </Box>
       </Box>

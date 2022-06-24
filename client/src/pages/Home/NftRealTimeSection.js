@@ -15,7 +15,7 @@ export default function NftRealTimeSection({ sx }) {
         container
         alignItems="center"
         flexDirection={{ xs: 'column-reverse', sm: 'row' }}
-        spacing={{ xs: 3, md: 0 }}
+        spacing={{ xs: 6, md: 0 }}
       >
         <Grid item xs={12} sm={6} md={5}>
           <Box component="img" src="assets/images/nft-real-time-image.png" alt="" />
