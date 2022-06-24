@@ -15,7 +15,7 @@ export default function Home() {
     <Box>
       <HeroSection />
       <Box
-        mt={{ xs: 0, md: 12}}
+        mt={{ xs: 0, md: 12 }}
         sx={{
           background: 'url(/assets/images/bg-wave-1.png) no-repeat',
           backgroundSize: { xs: 'auto', md: 'contain' }
@@ -25,13 +25,20 @@ export default function Home() {
       >
         <ProfitSection />
 
-        <Box component="img" src="assets/images/wave.png" alt="" width="100%" mt={20} zIndex={5} />
+        <Box
+          component="img"
+          src="assets/images/wave.png"
+          alt=""
+          width="100%"
+          mt={{ xs: 10, md: 20 }}
+          zIndex={5}
+        />
         <Box
           sx={{
             background: 'url(/assets/images/vector-4.png) no-repeat',
             backgroundSize: 'cover'
           }}
-          py={20}
+          py={{ xs: 10, md: 20 }}
         >
           <NftRealTimeSection />
         </Box>
