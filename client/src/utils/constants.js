@@ -35,3 +35,5 @@ export const FONT_WEIGHT_BOLD = 700;
 export const FONT_WEIGHT_SEMIBOLD = 600;
 export const FONT_WEIGHT_NORMAL = 500;
 export const FONT_WEIGHT_THIN = 400;
+
+export const PATH_CONVERTER = '/converter';

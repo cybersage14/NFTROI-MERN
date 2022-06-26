@@ -18,9 +18,10 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NotificationManager } from 'react-notifications';
-import { SecondaryButton } from '../../components/customComponents';
-import { COLOR_SECONDARY_BRIGHT } from '../../utils/constants';
+import { SecondaryButton, SecondaryMenu, SecondaryMenuItem } from '../../components/customComponents';
+import { COLOR_SECONDARY_BRIGHT, PATH_CONVERTER } from '../../utils/constants';
 import { setWallet } from '../../actions/manager';
+import { ArrowDropUp } from '@mui/icons-material';
 
 const ROUTES = [
   {
@@ -28,16 +29,16 @@ const ROUTES = [
     path: '/'
   },
   {
-    name: 'Overview',
-    path: '/overview'
+    name: 'Portfolio',
+    path: '/portfolio'
   },
   {
-    name: 'Holding',
-    path: '/holding'
+    name: 'Explore',
+    path: '/explore'
   },
   {
-    name: 'Transaction',
-    path: '/transaction'
+    name: 'Collections',
+    path: '/collections'
   }
 ];
 const CustomizedDrawer = styled(Drawer)`
@@ -55,6 +56,9 @@ export default function MainTopNavbar() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [bgColorOfAppBar, setBgColorOfAppBar] = useState('rgba(10, 10, 10, 0)');
   const [initWeb3, setInitWeb3] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
 
   const toggleBgColorOfAppBar = () => {
     const scrolled = document.documentElement.scrollTop;
@@ -65,6 +69,7 @@ export default function MainTopNavbar() {
       setBgColorOfAppBar('rgba(10, 10, 10, 0)');
     }
   };
+
   window.addEventListener('scroll', toggleBgColorOfAppBar);
 
   /// window.ethereum used to get addrss
@@ -86,6 +91,10 @@ export default function MainTopNavbar() {
     } else {
       NotificationManager.warning("Install metamask wallet on your browser");
     }
+  };
+
+  const handleToolsMenu = (e) => {
+    setAnchorEl(e.currentTarget);
   };
 
   useEffect(() => {
@@ -192,6 +201,41 @@ export default function MainTopNavbar() {
               </Button>
             ))
           }
+
+          <Button
+            onClick={handleToolsMenu}
+            sx={pathname === PATH_CONVERTER ? {
+              mr: 4,
+              fontWeight: 600,
+              color: 'white',
+              display: { xs: 'none', md: 'flex' }
+            } : {
+              mr: 4,
+              fontWeight: 400,
+              color: COLOR_SECONDARY_BRIGHT,
+              display: { xs: 'none', md: 'flex' }
+            }}
+            endIcon={<ArrowDropUp />}
+          >
+            Tools
+          </Button>
+          <SecondaryMenu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={() => setAnchorEl(null)}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <SecondaryMenuItem
+              onClick={() => setAnchorEl(null)}
+              component={RouterLink}
+              to={PATH_CONVERTER}
+            >
+              Converter
+            </SecondaryMenuItem>
+          </SecondaryMenu>
 
           <Box flexGrow={1}>
             <Stack direction="row" justifyContent="center">
