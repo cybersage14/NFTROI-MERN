@@ -1,4 +1,4 @@
-import { Button, List, ListItem, ListItemButton, Menu, MenuItem, Stack, TextField } from "@mui/material";
+import { Button, List, ListItemButton, Menu, MenuItem, Stack, TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import {
   BORDER_RADIUS_TEXTFIELD,
@@ -35,9 +35,14 @@ export const SecondaryButton = styled(Button)(({ theme }) => ({
   fontWeight: 400
 }));
 
-export const ViterousStack = styled(Stack)(({ theme }) => ({
+export const VerticalViterousStack = styled(Stack)(({ theme }) => ({
   background: `linear-gradient(${COLOR_BG_TEXTFIELD}, ${COLOR_BG_TEXTFIELD}) padding-box, linear-gradient(to top, ${COLOR_BORDER_GRADIENT_BOTTOM}, ${COLOR_BORDER_GRADIENT_TOP}) border-box`,
   border: '1px solid transparent'
+}));
+
+export const HorizontalViterousStack = styled(Stack)(({ theme }) => ({
+  background: 'linear-gradient(97.21deg, rgba(255, 255, 255, 0.15) 10.89%, rgba(145, 183, 255, 0.15) 87.44%)',
+  border: `1px solid ${COLOR_SECONDARY}`
 }));
 
 export const SecondaryMenu = styled(Menu)(({ theme }) => ({
@@ -51,6 +56,7 @@ export const SecondaryMenuItem = styled(MenuItem)(({ theme }) => ({
 export const SecondaryList = styled(List)(({ theme }) => ({
   border: `1px solid ${COLOR_SECONDARY}`,
   borderRadius: 10,
+  backgroundColor: COLOR_BORDER_GRADIENT_BOTTOM
 }));
 
 export const SecondaryListItemButton = styled(ListItemButton)(({ theme }) => ({

@@ -1,34 +1,47 @@
 /* eslint-disable */
-import React, { createElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import Web3 from 'web3';
+import { useDispatch } from 'react-redux';
 import { NotificationManager } from 'react-notifications';
 // material
 import { styled } from '@mui/material/styles';
 import {
-    Container, Stack, Button, Grid, Typography, CircularProgress, TextField, FormGroup, FormControlLabel, Checkbox
-    , TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper, List, ListItem, ListItemText, IconButton, SvgIcon, ListItemIcon, ListItemButton, Box
+    Container,
+    Stack,
+    Grid,
+    Typography,
+    CircularProgress,
+    ListItem,
+    ListItemText,
+    ListItemIcon,
+    Box,
+    Icon as MuiIcon,
+    Button
 } from '@mui/material';
+import { Icon } from '@iconify/react';
 // components
 import Page from '../../components/Page';
 import Stat from './Stat';
 import Holding from './Holding';
 import Transaction from './Transaction';
-import TabBar from './TabBar';
-import CompareWallet from './CompareWallet';
 // ----------------------------------------------------------------------
 import { setStats, setNFTs, setTransactions } from '../../actions/manager';
 import { getNFTs, getTransaction, getEns, getAddressType } from '../../lib/block';
-import { add } from 'lodash';
-import { Icon } from '@iconify/react';
-import Logo from '../../components/Logo';
-import { FacebookPath, LinkedinPath, TwitterPath } from '../SvgIcon';
-import { SecondaryList, SecondaryListItem, PrimaryButton, SecondaryButton, SecondaryListItemButton } from '../../components/customComponents';
-import { COLOR_SECONDARY_DARK, FONT_SIZE_BODY1_DESKTOP } from '../../utils/constants';
+import TabBar from './TabBar';
 
-const mainnet = 'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
-const web3 = new Web3(mainnet);
+import {
+    SecondaryList,
+    PrimaryButton,
+    SecondaryButton,
+    SecondaryListItemButton
+} from '../../components/customComponents';
+import {
+    COLOR_PRIMARY,
+    COLOR_SECONDARY,
+    FONT_SIZE_BODY1_DESKTOP,
+    FONT_SIZE_H2_DESKTOP,
+    FONT_SIZE_H3_DESKTOP
+} from '../../utils/constants';
 
 const RootStyle = styled(Page)({
     height: '100%',
@@ -156,7 +169,7 @@ export default function Portfolio() {
                                             }}
                                             onClick={() => setSideItem(tabItem.value)}
                                         >
-                                            <ListItemIcon>
+                                            <ListItemIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
                                                 <Icon icon={tabItem.icon} />
                                             </ListItemIcon>
                                             <ListItemText>{tabItem.name}</ListItemText>
@@ -166,7 +179,7 @@ export default function Portfolio() {
                             }
                             <ListItem
                                 sx={{
-                                    bgcolor: COLOR_SECONDARY_DARK,
+                                    bgcolor: '#252525',
                                     py: 4,
                                     borderBottomLeftRadius: 10,
                                     borderBottomRightRadius: 10
@@ -188,21 +201,66 @@ export default function Portfolio() {
                     </Grid>
                     <Grid item xs={12} md={9}>
                         <Stack spacing={3}>
-                            <Typography variant='h4'>
-                                {
-                                    sideItem === 'overview' && 'Your Wallet'
-                                }
-                                {
-                                    sideItem === 'holdings' && 'Holdings'
-                                }
-                                {
-                                    sideItem === 'transactions ' && 'Transactions History'
-                                }
+                            {
+                                sideItem === 'overview' && (
+                                    <Stack direction="row" alignItems="center" spacing={3}>
+                                        <MuiIcon
+                                            sx={{
+                                                color: COLOR_PRIMARY,
+                                                fontSize: FONT_SIZE_H2_DESKTOP
+                                            }}
+                                        >
+                                            <Icon icon="clarity:wallet-solid" />
+                                        </MuiIcon>
+                                        <Typography fontSize={FONT_SIZE_H2_DESKTOP}>
+                                            Portfolio Tracker
+                                        </Typography>
+                                    </Stack>
+                                )
+                            }
+                            {
+                                sideItem === 'holdings' && (
+                                    <Stack direction="row" alignItems="center" spacing={3}>
+                                        <MuiIcon
+                                            sx={{
+                                                color: COLOR_PRIMARY,
+                                                fontSize: FONT_SIZE_H2_DESKTOP
+                                            }}
+                                        >
+                                            <Icon icon="fa-solid:hand-holding-medical" />
+                                        </MuiIcon>
+                                        <Typography fontSize={FONT_SIZE_H2_DESKTOP}>
+                                            Holdings
+                                        </Typography>
+                                    </Stack>
+                                )
+                            }
+                            {
+                                sideItem === 'transactions' && (
+                                    <Stack direction="row" alignItems="center" spacing={3}>
+                                        <MuiIcon
+                                            sx={{
+                                                color: COLOR_PRIMARY,
+                                                fontSize: FONT_SIZE_H2_DESKTOP
+                                            }}
+                                        >
+                                            <Icon icon="fa6-solid:clock-rotate-left" />
+                                        </MuiIcon>
+                                        <Typography fontSize={FONT_SIZE_H2_DESKTOP}>
+                                            Transactions
+                                        </Typography>
+                                    </Stack>
+                                )
+                            }
+
+                            <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY}>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             </Typography>
-                            <Stack direction={{ md: 'row', xs: 'column' }} spacing={1} justifyContent='center' alignItems="center">
+
+                            {/* <Stack direction={{ md: 'row', xs: 'column' }} spacing={1} justifyContent='center' alignItems="center">
                                 <TabBar wallets={wallets} handleWallets={setWallets} />
                                 <Button variant='contained' onClick={analyse}>Analyse</Button>
-                            </Stack>
+                            </Stack> */}
                             {
                                 loading &&
                                 <Stack direction='row' justifyContent='center' alignItems='center'>
@@ -211,7 +269,7 @@ export default function Portfolio() {
                                 </Stack>
                             }
                             {
-                                sideItem === 'overview' && <Stat />
+                                sideItem === 'overview' && <Stat wallets={wallets} handleWallets={setWallets} getAllData={getAllData} />
                             }
                             {
                                 sideItem === 'holdings' && <Holding />
