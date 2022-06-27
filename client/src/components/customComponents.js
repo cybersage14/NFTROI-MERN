@@ -1,4 +1,4 @@
-import { Button, List, ListItemButton, Menu, MenuItem, Stack, TextField } from "@mui/material";
+import { Box, Button, List, ListItemButton, Menu, MenuItem, Stack, TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import {
   BORDER_RADIUS_TEXTFIELD,
@@ -63,4 +63,8 @@ export const SecondaryListItemButton = styled(ListItemButton)(({ theme }) => ({
   '&:hover': {
     border: `2px solid ${COLOR_SECONDARY}`,
   }
+}));
+
+export const PrimaryBox = styled(Box)(({ theme }) => ({
+  backgroundImage: `linear-gradient(to right, ${COLOR_PRIMARY_GRADIENT_LEFT}, ${COLOR_PRIMARY_GRADIENT_RIGHT})`,
 }));

@@ -19,7 +19,7 @@ import {
     FONT_SIZE_BODY2_DESKTOP,
     FONT_SIZE_H2_DESKTOP
 } from '../../utils/constants';
-import { HorizontalViterousStack, PrimaryTextField, SecondaryButton, VerticalViterousStack } from '../../components/customComponents';
+import { HorizontalViterousStack, PrimaryBox, PrimaryTextField, SecondaryButton, VerticalViterousStack } from '../../components/customComponents';
 import { shortAddress } from '../../lib/block';
 
 
@@ -151,6 +151,7 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                                         Available Balance
                                     </Typography>
                                 </Stack>
+
                                 <Stack direction="row" alignItems="center" spacing={1}>
                                     <Typography
                                         fontSize={FONT_SIZE_H3_DESKTOP}
@@ -166,6 +167,7 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                                         <Icon icon="logos:ethereum" />
                                     </MuiIcon>
                                 </Stack>
+
                                 <Typography
                                     fontSize={FONT_SIZE_BODY1_DESKTOP}
                                     color={COLOR_SECONDARY_BRIGHT}
@@ -174,6 +176,7 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                                 </Typography>
                             </HorizontalViterousStack>
                         </Grid>
+
                         <Grid item xs={12} md={7}>
                             <Typography
                                 fontSize={FONT_SIZE_H3_DESKTOP}
@@ -181,6 +184,7 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                             >
                                 Add wallet
                             </Typography>
+
                             <Stack direction="row" alignItems="stretch" spacing={2} mt={2}>
                                 <Box width="70%">
                                     <PrimaryTextField
@@ -194,6 +198,7 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                                     <Add sx={{ fontSize: FONT_SIZE_H2_DESKTOP }} />
                                 </SecondaryButton>
                             </Stack>
+
                             <Grid container spacing={2} sx={{ mt: 2 }}>
                                 {wallets.map(child =>
                                     <Grid item xs={12} md={4} key={child}>
@@ -229,6 +234,27 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                         </Grid>
                     </Grid>
                 </Box>
+
+                {/* <Box>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={4}>
+                            <HorizontalViterousStack
+                                px={2}
+                                py={1}
+                                direction="row"
+                                justifyContent="space-between"
+                            >
+                                <PrimaryBox width={40} height={40}>
+                                    <MuiIcon>
+                                        <Icon icon="icons8:unlock-2" />
+                                    </MuiIcon>
+                                </PrimaryBox>
+                            </HorizontalViterousStack>
+                        </Grid>
+                        <Grid item xs={12} md={4}></Grid>
+                        <Grid item xs={12} md={4}></Grid>
+                    </Grid>
+                </Box> */}
             </Stack>
 
 
