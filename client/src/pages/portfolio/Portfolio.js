@@ -17,7 +17,10 @@ import {
     ListItemIcon,
     Box,
     Icon as MuiIcon,
-    Button
+    Button,
+    IconButton,
+    ListItemButton,
+    InputAdornment
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 // components
@@ -27,20 +30,20 @@ import Holding from './Holding';
 import Transaction from './Transaction';
 // ----------------------------------------------------------------------
 import { setStats, setNFTs, setTransactions } from '../../actions/manager';
-import { getNFTs, getTransaction, getEns, getAddressType } from '../../lib/block';
-import TabBar from './TabBar';
-
+import { getNFTs, getTransaction, getEns, getAddressType, shortAddress } from '../../lib/block';
 import {
     SecondaryList,
     PrimaryButton,
     SecondaryButton,
-    SecondaryListItemButton
+    SecondaryListItemButton,
+    PrimaryTextField
 } from '../../components/customComponents';
 import {
     COLOR_PRIMARY,
     COLOR_SECONDARY,
     COLOR_SECONDARY_BRIGHT,
     FONT_SIZE_BODY1_DESKTOP,
+    FONT_SIZE_BODY2_DESKTOP,
     FONT_SIZE_H2_DESKTOP,
     FONT_SIZE_H3_DESKTOP
 } from '../../utils/constants';
@@ -77,6 +80,8 @@ export default function Portfolio() {
     const [infos, setInfos] = useState([]);
     const [loading, setLoading] = useState(false);
     const [sideItem, setSideItem] = useState('overview');
+    const [wallet, setWallet] = useState('');
+    const [visibleAddForm, setVisibleAddForm] = useState(false);
 
     useEffect(() => {
         startAnalyse();
@@ -89,12 +94,6 @@ export default function Portfolio() {
         } else if (type === 'account') {
             setWallets([address]);
             getAllData([address]);
-        }
-    };
-
-    const analyse = () => {
-        if (wallets.length > 0) {
-            getAllData(wallets);
         }
     };
 
@@ -151,6 +150,43 @@ export default function Portfolio() {
         setLoading(false);
     };
 
+    const handleAddTab = (address) => {
+        setWallets([
+            ...wallets,
+            address
+        ]);
+    };
+
+    const addWallet = () => {
+        if (wallet.trim()) {
+            handleAddTab(wallet);
+        }
+        closeAddForm();
+    };
+
+    const changeIncludeGas = (e) => {
+        setIncludeGas(e.target.checked);
+    };
+
+    const handleClose = (e, tabId) => {
+        // setAddWallet(wallets.filter(tab => tab !== tabId))
+        setWallets(wallets.filter(tab => tab !== tabId));
+    };
+
+    const openAddForm = () => {
+        setVisibleAddForm(true);
+    };
+
+    const closeAddForm = () => {
+        setVisibleAddForm(false);
+    };
+
+    useEffect(() => {
+        if (wallets.length > 0) {
+            getAllData(wallets);
+        }
+    }, [wallets.length]);
+
     return (
         <RootStyle title="nftroi" id="move_top">
             <Container maxWidth="xl">
@@ -158,6 +194,7 @@ export default function Portfolio() {
                     <Grid item xs={12} md={3}>
                         <Card sx={{ borderRadius: 1 }}>
                             <SecondaryList sx={{ pb: 0 }}>
+                                {/* Tabs */}
                                 {
                                     TABS.map(tabItem => (
                                         <ListItem key={tabItem.name}>
@@ -181,27 +218,101 @@ export default function Portfolio() {
                                     ))
                                 }
 
-                                <ListItem
-                                    sx={{
-                                        bgcolor: COLOR_SECONDARY,
-                                        py: 4,
-                                        borderBottomLeftRadius: 10,
-                                        borderBottomRightRadius: 10
-                                    }}
-                                >
-                                    <ListItemIcon>
-                                        <Box
-                                            component="img"
-                                            src="assets/images/wallet.png"
-                                            alt=""
-                                            sx={{ borderRadius: '50%' }}
-                                            width={30}
-                                        />
-                                    </ListItemIcon>
-                                    <ListItemText>
-                                        0xe59DCf131...
-                                    </ListItemText>
-                                </ListItem>
+
+                                {/* Wallet addresses */}
+                                {
+                                    wallets.map(child => (
+                                        <ListItem
+                                            key={child}
+                                            sx={{
+                                                bgcolor: COLOR_SECONDARY,
+                                                pt: 2,
+                                            }}
+                                            secondaryAction={
+                                                <IconButton
+                                                    onClick={event => handleClose(event, child)}
+                                                >
+                                                    <MuiIcon
+                                                        sx={{
+                                                            fontSize: FONT_SIZE_BODY1_DESKTOP,
+                                                            color: COLOR_SECONDARY_BRIGHT
+                                                        }}
+                                                    >
+                                                        <Icon icon="charm:circle-cross" />
+                                                    </MuiIcon>
+                                                </IconButton>
+                                            }
+                                        >
+                                            <ListItemIcon>
+                                                <Box
+                                                    component="img"
+                                                    src="assets/images/wallet.png"
+                                                    alt=""
+                                                    sx={{ borderRadius: '50%' }}
+                                                    width={30}
+                                                />
+                                            </ListItemIcon>
+                                            <ListItemText
+                                                fontSize={FONT_SIZE_BODY2_DESKTOP}
+                                                color={COLOR_SECONDARY}
+                                            >
+                                                {shortAddress(child)}
+                                            </ListItemText>
+                                        </ListItem>
+                                    ))
+                                }
+
+                                {/* Add new wallet button */}
+                                {
+                                    !visibleAddForm && (
+                                        <ListItem
+                                            sx={{
+                                                bgcolor: COLOR_SECONDARY,
+                                                py: 2,
+                                                borderBottomLeftRadius: 10,
+                                                borderBottomRightRadius: 10
+                                            }}
+                                        >
+                                            <ListItemButton onClick={openAddForm}>
+                                                <ListItemIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
+                                                    <Icon icon="fluent:add-square-24-filled" />
+                                                </ListItemIcon>
+                                                <ListItemText fontSize={FONT_SIZE_BODY1_DESKTOP}>
+                                                    ADD NEW WALLET
+                                                </ListItemText>
+                                            </ListItemButton>
+                                        </ListItem>
+                                    )
+                                }
+
+                                {
+                                    visibleAddForm && (
+                                        <ListItem
+                                            sx={{
+                                                bgcolor: COLOR_SECONDARY,
+                                                py: 3,
+                                                borderBottomLeftRadius: 10,
+                                                borderBottomRightRadius: 10
+                                            }}
+                                        >
+                                            <PrimaryTextField
+                                                placeholder="Put your wallet address here"
+                                                InputProps={{
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <PrimaryButton onClick={addWallet}>
+                                                                Add
+                                                            </PrimaryButton>
+                                                        </InputAdornment>
+                                                    )
+                                                }}
+                                                onChange={e => setWallet(e.target.value)}
+                                                fullWidth
+                                            />
+                                        </ListItem>
+                                    )
+                                }
+
                             </SecondaryList>
                         </Card>
                     </Grid>
@@ -267,7 +378,7 @@ export default function Portfolio() {
                             </Typography>
 
                             {/* <Stack direction={{ md: 'row', xs: 'column' }} spacing={1} justifyContent='center' alignItems="center">
-                                <TabBar wallets={wallets} handleWallets={setWallets} />
+                                <TabBar wallets={wallets} setWallets={setWallets} />
                                 <Button variant='contained' onClick={analyse}>Analyse</Button>
                             </Stack> */}
                             {
@@ -278,7 +389,7 @@ export default function Portfolio() {
                                 </Stack>
                             }
                             {
-                                sideItem === 'overview' && <Stat wallets={wallets} handleWallets={setWallets} getAllData={getAllData} />
+                                sideItem === 'overview' && <Stat wallets={wallets} setWallets={setWallets} getAllData={getAllData} />
                             }
                             {
                                 sideItem === 'holdings' && <Holding />

@@ -31,7 +31,7 @@ export const PrimaryButton = styled(Button)(({ theme }) => ({
 
 export const SecondaryButton = styled(Button)(({ theme }) => ({
   color: 'white',
-  border: `2px solid ${COLOR_SECONDARY}`,
+  border: `1px solid ${COLOR_SECONDARY_BRIGHT}`,
   background: 'rgba(0, 0, 0, 0)',
   fontWeight: 400
 }));

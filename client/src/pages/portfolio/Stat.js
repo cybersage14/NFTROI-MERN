@@ -96,38 +96,9 @@ const FeeItem = ({ title, percent, icon, value }) => {
 
 // ----------------------------------------------------------------------
 
-export default function Stat({ wallets, handleWallets, getAllData }) {
+export default function Stat() {
     const stats = useSelector(state => state.manager.stats);
     const [includeGas, setIncludeGas] = useState(true);
-    const [wallet, setWallet] = useState('');
-
-    const handleAddTab = (address) => {
-        handleWallets([
-            ...wallets,
-            address
-        ]);
-    };
-
-    const addWallet = () => {
-        if (wallet.trim()) {
-            handleAddTab(wallet);
-        }
-    };
-
-    const changeIncludeGas = (e) => {
-        setIncludeGas(e.target.checked);
-    };
-
-    const handleClose = (e, tabId) => {
-        // setAddWallet(wallets.filter(tab => tab !== tabId))
-        handleWallets(wallets.filter(tab => tab !== tabId));
-    };
-
-    useEffect(() => {
-        if (wallets.length > 0) {
-            getAllData(wallets);
-        }
-    }, [wallets.length]);
 
     return (
         <>
@@ -178,58 +149,7 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                         </Grid>
 
                         <Grid item xs={12} md={7}>
-                            <Typography
-                                fontSize={FONT_SIZE_H3_DESKTOP}
-                                fontWeight={FONT_WEIGHT_NORMAL}
-                            >
-                                Add wallet
-                            </Typography>
-
-                            <Stack direction="row" alignItems="stretch" spacing={2} mt={2}>
-                                <Box width="70%">
-                                    <PrimaryTextField
-                                        placeholder="Put your wallet address here"
-                                        name="walletAddress"
-                                        onChange={e => setWallet(e.target.value)}
-                                        fullWidth
-                                    />
-                                </Box>
-                                <SecondaryButton onClick={addWallet}>
-                                    <Add sx={{ fontSize: FONT_SIZE_H2_DESKTOP }} />
-                                </SecondaryButton>
-                            </Stack>
-
-                            <Grid container spacing={2} sx={{ mt: 2 }}>
-                                {wallets.map(child =>
-                                    <Grid item xs={12} md={4} key={child}>
-                                        <VerticalViterousStack
-                                            py={1}
-                                            px={2}
-                                            direction="row"
-                                            width="100%"
-                                            alignItems="center"
-                                            justifyContent="space-between"
-                                            borderRadius={1}
-                                        >
-                                            <Typography
-                                                fontSize={FONT_SIZE_BODY2_DESKTOP}
-                                                color={COLOR_SECONDARY}
-                                            >
-                                                {shortAddress(child)}
-                                            </Typography>
-                                            <IconButton
-                                                onClick={event => handleClose(event, child)}
-                                                sx={{
-                                                    fontSize: FONT_SIZE_BODY1_DESKTOP,
-                                                    color: COLOR_SECONDARY
-                                                }}
-                                            >
-                                                <Icon icon="charm:circle-cross" />
-                                            </IconButton>
-                                        </VerticalViterousStack>
-                                    </Grid>
-                                )}
-                            </Grid>
+                            
                         </Grid>
                     </Grid>
                 </Box>
@@ -263,11 +183,11 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                     <FormControlLabel control={<Checkbox checked={includeGas} onChange={changeIncludeGas} />} label="Include Total Fee in P/L" />
                 </FormGroup> */}
                 <Stack direction='row' alignItems='center' spacing={3} sx={{ my: 3 }}>
-                    <Box 
-                        component='img' 
-                        src='/static/icons/balance.svg' 
-                        width='48px' 
-                        height='48px' 
+                    <Box
+                        component='img'
+                        src='/static/icons/balance.svg'
+                        width='48px'
+                        height='48px'
                     />
                     <Stack direction='column'>
                         <Typography variant='h6' color='text.secondary'>Available Balance</Typography>
