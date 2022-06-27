@@ -229,7 +229,6 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                                         </VerticalViterousStack>
                                     </Grid>
                                 )}
-
                             </Grid>
                         </Grid>
                     </Grid>
@@ -264,7 +263,12 @@ export default function Stat({ wallets, handleWallets, getAllData }) {
                     <FormControlLabel control={<Checkbox checked={includeGas} onChange={changeIncludeGas} />} label="Include Total Fee in P/L" />
                 </FormGroup> */}
                 <Stack direction='row' alignItems='center' spacing={3} sx={{ my: 3 }}>
-                    <Box component='img' src='/static/icons/balance.svg' width='48px' height='48px' />
+                    <Box 
+                        component='img' 
+                        src='/static/icons/balance.svg' 
+                        width='48px' 
+                        height='48px' 
+                    />
                     <Stack direction='column'>
                         <Typography variant='h6' color='text.secondary'>Available Balance</Typography>
                         <Stack direction='row' spacing={3}>

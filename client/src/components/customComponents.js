@@ -7,7 +7,8 @@ import {
   COLOR_BORDER_GRADIENT_TOP,
   COLOR_PRIMARY_GRADIENT_LEFT,
   COLOR_PRIMARY_GRADIENT_RIGHT,
-  COLOR_SECONDARY
+  COLOR_SECONDARY,
+  COLOR_SECONDARY_BRIGHT
 } from "../utils/constants";
 
 export const PrimaryTextField = styled(TextField)(({ theme }) => ({
@@ -42,7 +43,7 @@ export const VerticalViterousStack = styled(Stack)(({ theme }) => ({
 
 export const HorizontalViterousStack = styled(Stack)(({ theme }) => ({
   background: 'linear-gradient(97.21deg, rgba(255, 255, 255, 0.15) 10.89%, rgba(145, 183, 255, 0.15) 87.44%)',
-  border: `1px solid ${COLOR_SECONDARY}`
+  border: `1px solid ${COLOR_SECONDARY_BRIGHT}`
 }));
 
 export const SecondaryMenu = styled(Menu)(({ theme }) => ({

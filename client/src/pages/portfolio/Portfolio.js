@@ -6,6 +6,7 @@ import { NotificationManager } from 'react-notifications';
 // material
 import { styled } from '@mui/material/styles';
 import {
+    Card,
     Container,
     Stack,
     Grid,
@@ -38,6 +39,7 @@ import {
 import {
     COLOR_PRIMARY,
     COLOR_SECONDARY,
+    COLOR_SECONDARY_BRIGHT,
     FONT_SIZE_BODY1_DESKTOP,
     FONT_SIZE_H2_DESKTOP,
     FONT_SIZE_H3_DESKTOP
@@ -154,50 +156,54 @@ export default function Portfolio() {
             <Container maxWidth="xl">
                 <Grid container spacing={8}>
                     <Grid item xs={12} md={3}>
-                        <SecondaryList sx={{ pb: 0 }}>
-                            {
-                                TABS.map(tabItem => (
-                                    <ListItem key={tabItem.name}>
-                                        <SecondaryListItemButton
-                                            component={
-                                                sideItem === tabItem.value ? PrimaryButton : SecondaryButton
-                                            }
-                                            sx={{
-                                                borderRadius: 1,
-                                                fontSize: FONT_SIZE_BODY1_DESKTOP,
-                                                py: 1.5,
-                                            }}
-                                            onClick={() => setSideItem(tabItem.value)}
-                                        >
-                                            <ListItemIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
-                                                <Icon icon={tabItem.icon} />
-                                            </ListItemIcon>
-                                            <ListItemText>{tabItem.name}</ListItemText>
-                                        </SecondaryListItemButton>
-                                    </ListItem>
-                                ))
-                            }
-                            <ListItem
-                                sx={{
-                                    bgcolor: '#252525',
-                                    py: 4,
-                                    borderBottomLeftRadius: 10,
-                                    borderBottomRightRadius: 10
-                                }}
-                            >
-                                <Stack
-                                    direction="row"
-                                    justifyContent="center"
-                                    width="100%"
-                                    spacing={2}
+                        <Card sx={{ borderRadius: 1 }}>
+                            <SecondaryList sx={{ pb: 0 }}>
+                                {
+                                    TABS.map(tabItem => (
+                                        <ListItem key={tabItem.name}>
+                                            <SecondaryListItemButton
+                                                component={
+                                                    sideItem === tabItem.value ? PrimaryButton : SecondaryButton
+                                                }
+                                                sx={{
+                                                    borderRadius: 1,
+                                                    fontSize: FONT_SIZE_BODY1_DESKTOP,
+                                                    py: 1.5,
+                                                }}
+                                                onClick={() => setSideItem(tabItem.value)}
+                                            >
+                                                <ListItemIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
+                                                    <Icon icon={tabItem.icon} />
+                                                </ListItemIcon>
+                                                <ListItemText>{tabItem.name}</ListItemText>
+                                            </SecondaryListItemButton>
+                                        </ListItem>
+                                    ))
+                                }
+
+                                <ListItem
+                                    sx={{
+                                        bgcolor: COLOR_SECONDARY,
+                                        py: 4,
+                                        borderBottomLeftRadius: 10,
+                                        borderBottomRightRadius: 10
+                                    }}
                                 >
-                                    <Box component="img" src="assets/images/wallet.png" alt="" sx={{ borderRadius: '50%' }} />
-                                    <Typography>
-                                        wefwefwef
-                                    </Typography>
-                                </Stack>
-                            </ListItem>
-                        </SecondaryList>
+                                    <ListItemIcon>
+                                        <Box
+                                            component="img"
+                                            src="assets/images/wallet.png"
+                                            alt=""
+                                            sx={{ borderRadius: '50%' }}
+                                            width={30}
+                                        />
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        0xe59DCf131...
+                                    </ListItemText>
+                                </ListItem>
+                            </SecondaryList>
+                        </Card>
                     </Grid>
                     <Grid item xs={12} md={9}>
                         <Stack spacing={3}>
@@ -253,7 +259,10 @@ export default function Portfolio() {
                                 )
                             }
 
-                            <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY}>
+                            <Typography
+                                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                color={COLOR_SECONDARY_BRIGHT}
+                            >
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             </Typography>
 
