@@ -11,6 +11,7 @@ export const COLOR_ERROR_SECONDARY = '#E66667';
 export const COLOR_WHITE = '#FFFFFF';
 export const COLOR_BLACK = '#000000';
 export const COLOR_SECONDARY = grey[700];
+export const COLOR_SECONDARY_DARK = grey[900];
 export const COLOR_SECONDARY_BRIGHT = grey[500];
 export const COLOR_BG_TEXTFIELD = grey[900];
 export const COLOR_BORDER_GRADIENT_BOTTOM = '#131315';

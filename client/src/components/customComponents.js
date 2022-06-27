@@ -1,4 +1,4 @@
-import { Button, Menu, MenuItem, Stack, TextField } from "@mui/material";
+import { Button, List, ListItem, ListItemButton, Menu, MenuItem, Stack, TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import {
   BORDER_RADIUS_TEXTFIELD,
@@ -42,8 +42,19 @@ export const ViterousStack = styled(Stack)(({ theme }) => ({
 
 export const SecondaryMenu = styled(Menu)(({ theme }) => ({
   borderRadius: 5
-}))
+}));
 
 export const SecondaryMenuItem = styled(MenuItem)(({ theme }) => ({
   fontSize: 12
-}))
+}));
+
+export const SecondaryList = styled(List)(({ theme }) => ({
+  border: `1px solid ${COLOR_SECONDARY}`,
+  borderRadius: 10,
+}));
+
+export const SecondaryListItemButton = styled(ListItemButton)(({ theme }) => ({
+  '&:hover': {
+    border: `2px solid ${COLOR_SECONDARY}`,
+  }
+}));
