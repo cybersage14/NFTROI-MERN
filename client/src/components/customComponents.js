@@ -1,4 +1,4 @@
-import { Box, Button, List, ListItemButton, Menu, MenuItem, Stack, TextField } from "@mui/material";
+import { Button, List, ListItemButton, Menu, MenuItem, Stack, TextField } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import {
   BORDER_RADIUS_TEXTFIELD,
