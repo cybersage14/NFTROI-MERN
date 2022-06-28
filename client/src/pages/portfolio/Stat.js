@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Web3 from 'web3';
 // material
@@ -17,9 +17,19 @@ import {
     FONT_WEIGHT_SEMIBOLD,
     COLOR_SECONDARY,
     FONT_SIZE_BODY2_DESKTOP,
-    FONT_SIZE_H2_DESKTOP
+    FONT_SIZE_H2_DESKTOP,
+    COLOR_WHITE,
+    COLOR_PRIMARY,
+    COLOR_ERROR,
+    COLOR_SUCCESS
 } from '../../utils/constants';
-import { HorizontalViterousStack, PrimaryBox, PrimaryTextField, SecondaryButton, VerticalViterousStack } from '../../components/customComponents';
+import {
+    HorizontalViterousStack,
+    PrimaryStack,
+    PrimaryTextField,
+    SecondaryButton,
+    VerticalViterousStack
+} from '../../components/customComponents';
 import { shortAddress } from '../../lib/block';
 
 
@@ -94,15 +104,108 @@ const FeeItem = ({ title, percent, icon, value }) => {
     );
 };
 
+const StateCard = ({ title, value, color, graph, icon }) => (
+    <HorizontalViterousStack
+        direction="row"
+        justifyContent="space-between"
+        borderRadius={1}
+        py={2}
+        px={2}
+        alignItems="center"
+    >
+        <Grid container spacing={3} alignItems="center">
+            <Grid item xs={12} md={4}>
+                <Stack direction="row" justifyContent="center">
+                    <PrimaryStack
+                        width={60}
+                        height={60}
+                        borderRadius="50%"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <MuiIcon sx={{ fontSize: FONT_SIZE_H2_DESKTOP }}>
+                            <Icon icon={icon} />
+                        </MuiIcon>
+                    </PrimaryStack>
+                </Stack>
+            </Grid>
+
+            <Grid item xs={12} md={8}>
+                <Stack spacing={0.5}>
+                    <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                    >
+                        <Typography
+                            component="span"
+                            fontSize={FONT_SIZE_BODY1_DESKTOP}
+                            color={COLOR_SECONDARY_BRIGHT}
+                        >
+                            {title}
+                        </Typography>
+                        <MuiIcon
+                            sx={{
+                                fontSize: FONT_SIZE_H3_DESKTOP,
+                                color: COLOR_SECONDARY_BRIGHT
+                            }}
+                        >
+                            <Icon icon="bxs:info-circle" />
+                        </MuiIcon>
+                    </Stack>
+
+                    <Stack direction="row" spacing={1}>
+                        <MuiIcon sx={{ fontSize: FONT_SIZE_H2_DESKTOP }}>
+                            <Icon icon="logos:ethereum" />
+                        </MuiIcon>
+
+                        <Box>
+                            <Typography
+                                fontSize={FONT_SIZE_H3_DESKTOP}
+                                color={color}
+                                fontWeight={FONT_WEIGHT_NORMAL}
+                            >{value}</Typography>
+                            <Typography
+                                component="span"
+                                fontSize={FONT_SIZE_BODY2_DESKTOP - 3}
+                                color={COLOR_SECONDARY_BRIGHT}
+                            >320 items bought</Typography>
+                        </Box>
+
+                        {
+                            color && (
+                                <Box
+                                    component="img"
+                                    src={
+                                        color === COLOR_ERROR ? 'assets/images/tiny-graph-red.png' : 'assets/images/tiny-graph-green.png'
+                                    }
+                                    alt=""
+                                    mt={1}
+                                    flexGrow={1}
+                                />
+                            )
+                        }
+
+                    </Stack>
+                </Stack>
+            </Grid>
+        </Grid>
+    </HorizontalViterousStack>
+);
+
 // ----------------------------------------------------------------------
 
-export default function Stat() {
+export default function Stat({ selectedWallet }) {
     const stats = useSelector(state => state.manager.stats);
     const [includeGas, setIncludeGas] = useState(true);
 
+    const changeIncludeGas = (e) => {
+        setIncludeGas(e.target.checked);
+    };
+
     return (
         <>
-            <Stack spacing={3}>
+            <Stack spacing={6}>
                 <Box>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={5}>
@@ -149,40 +252,180 @@ export default function Stat() {
                         </Grid>
 
                         <Grid item xs={12} md={7}>
-                            
+                            {
+                                selectedWallet && (
+                                    <Stack spacing={3}>
+                                        <Stack direction="row" alignItems="center" spacing={2}>
+                                            <Box
+                                                component="img"
+                                                src="assets/images/wallet.png"
+                                                alt=""
+                                                width={50}
+                                                borderRadius="50%"
+                                            />
+                                            <Box>
+                                                <Typography
+                                                    color={COLOR_SECONDARY_BRIGHT}
+                                                    fontSize={FONT_SIZE_BODY2_DESKTOP}
+                                                >ADDRESS:</Typography>
+                                                <Typography
+                                                    color={COLOR_WHITE}
+                                                    fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                                >
+                                                    {shortAddress(selectedWallet)}
+                                                </Typography>
+                                            </Box>
+                                        </Stack>
+
+                                        {/* Badges */}
+                                        <Box>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={12} md={3}>
+                                                    <Stack
+                                                        borderRadius={1}
+                                                        bgcolor="rgb(98, 246, 255, 0.1)"
+                                                        p={1.5}
+                                                        direction="row"
+                                                        alignItems="center"
+                                                        justifyContent="space-between"
+                                                    >
+                                                        <Box
+                                                            component="img"
+                                                            src="assets/images/logo.png"
+                                                            alt=""
+                                                        />
+                                                        <Typography
+                                                            component="span"
+                                                            fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                                        >NFT Degen</Typography>
+                                                    </Stack>
+                                                </Grid>
+
+                                                <Grid item xs={12} md={3}>
+                                                    <Stack
+                                                        borderRadius={1}
+                                                        bgcolor="rgb(98, 246, 255, 0.1)"
+                                                        p={1.5}
+                                                        direction="row"
+                                                        alignItems="center"
+                                                        justifyContent="space-between"
+                                                    >
+                                                        <MuiIcon
+                                                            sx={{
+                                                                color: COLOR_PRIMARY,
+                                                                fontSize: FONT_SIZE_H2_DESKTOP
+                                                            }}
+                                                        >
+                                                            <Icon icon="bi:arrow-up-square-fill" />
+                                                        </MuiIcon>
+                                                        <Typography
+                                                            component="span"
+                                                            fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                                        >Top Trader</Typography>
+                                                    </Stack>
+                                                </Grid>
+                                            </Grid>
+                                        </Box>
+
+                                        <Box>
+                                            <Grid container>
+                                                <Grid item xs={12} md={3}>
+                                                    <Stack spacing={1}>
+                                                        <Typography
+                                                            component="span"
+                                                            fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                                            fontWeight={FONT_WEIGHT_NORMAL}
+                                                        >NFT's</Typography>
+                                                        <Typography
+                                                            component="span"
+                                                            fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                                            fontWeight={FONT_WEIGHT_NORMAL}
+                                                            color={COLOR_SECONDARY_BRIGHT}
+                                                        >38</Typography>
+                                                    </Stack>
+                                                </Grid>
+                                                <Grid item xs={12} md={3}>
+                                                    <Stack spacing={1}>
+                                                        <Typography
+                                                            component="span"
+                                                            fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                                            fontWeight={FONT_WEIGHT_NORMAL}
+                                                        >Collections</Typography>
+                                                        <Typography
+                                                            component="span"
+                                                            fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                                            fontWeight={FONT_WEIGHT_NORMAL}
+                                                            color={COLOR_SECONDARY_BRIGHT}
+                                                        >7</Typography>
+                                                    </Stack>
+                                                </Grid>
+                                                <Grid item xs={12} md={3}>
+                                                    <Stack spacing={1}>
+                                                        <Typography
+                                                            component="span"
+                                                            fontSize={FONT_SIZE_BODY1_DESKTOP}
+                                                            fontWeight={FONT_WEIGHT_NORMAL}
+                                                        >Top Holdings</Typography>
+                                                        <Box
+                                                            component="img"
+                                                            src="assets/images/wallet.png"
+                                                            alt=""
+                                                            width={30}
+                                                            borderRadius="50%"
+                                                        />
+                                                    </Stack>
+                                                </Grid>
+                                            </Grid>
+                                        </Box>
+                                    </Stack>
+                                )
+                            }
                         </Grid>
                     </Grid>
                 </Box>
 
-                {/* <Box>
+                <Box>
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={4}>
-                            <HorizontalViterousStack
-                                px={2}
-                                py={1}
-                                direction="row"
-                                justifyContent="space-between"
-                            >
-                                <PrimaryBox width={40} height={40}>
-                                    <MuiIcon>
-                                        <Icon icon="icons8:unlock-2" />
-                                    </MuiIcon>
-                                </PrimaryBox>
-                            </HorizontalViterousStack>
+                            <StateCard
+                                title="Closed PNL"
+                                value={includeGas ? `${stats?.closePL || 0} ETH` : `${stats?.closePL_noFee || 0} ETH`}
+                                icon="icon-park-solid:lock-one"
+                                color={includeGas ?
+                                    (stats?.closePL || 0) >= 0 ? COLOR_SUCCESS : COLOR_ERROR
+                                    :
+                                    (stats?.closePL_noFee || 0) >= 0 ? COLOR_SUCCESS : COLOR_ERROR}
+                            />
                         </Grid>
-                        <Grid item xs={12} md={4}></Grid>
-                        <Grid item xs={12} md={4}></Grid>
+                        <Grid item xs={12} md={4}>
+                            <StateCard
+                                title="Open PNL"
+                                icon="icon-park-solid:unlock-one"
+                                value={includeGas ? `${stats?.openPL || 0} ETH` : `${stats?.openPL_noFee || 0} ETH`}
+                                color={includeGas ?
+                                    (stats?.openPL || 0) >= 0 ? COLOR_SUCCESS : COLOR_ERROR
+                                    :
+                                    (stats?.openPL_noFee || 0) >= 0 ? COLOR_SUCCESS : COLOR_ERROR}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <StateCard
+                                title="Total Holding Value"
+                                icon="icon-park-solid:hold-seeds"
+                                value={`${stats?.totalHoldingValue || 0} ETH`}
+                            />
+                        </Grid>
                     </Grid>
-                </Box> */}
+                </Box>
+
+                <PLGraph />
             </Stack>
-
-
 
             <Box>
                 {/* <FormGroup>
                     <FormControlLabel control={<Checkbox checked={includeGas} onChange={changeIncludeGas} />} label="Include Total Fee in P/L" />
                 </FormGroup> */}
-                <Stack direction='row' alignItems='center' spacing={3} sx={{ my: 3 }}>
+                {/* <Stack direction='row' alignItems='center' spacing={3} sx={{ my: 3 }}>
                     <Box
                         component='img'
                         src='/static/icons/balance.svg'
@@ -196,15 +439,15 @@ export default function Stat() {
                             <Typography variant='h5'>{`${stats?.balance || 0} ETH`}</Typography>
                         </Stack>
                     </Stack>
-                </Stack>
-                <Grid container spacing={3}>
+                </Stack> */}
+                {/* <Grid container spacing={3}>
                     <Grid item xs={12} md={4}>
                         <StatsCard
                             icon='/static/icons/pnl.svg'
                             title='Closed PNL'
                             value={includeGas ? `${stats?.closePL || 0} ETH` : `${stats?.closePL_noFee || 0} ETH`}
                             color={includeGas ?
-                                (stats?.closePL || 0) >= 0 ? 'success.main' : 'error.main'
+                                (stats?.closePL || 0) >= 0 ? 'success.main' : COLOR_ERROR
                                 :
                                 (stats?.closePL_noFee || 0) >= 0 ? 'success.main' : 'error.main'}
                         />
@@ -223,8 +466,8 @@ export default function Stat() {
                     <Grid item xs={12} md={4}>
                         <StatsCard icon='/static/icons/holding.svg' title='Total Holding Value' value={`${stats?.totalHoldingValue || 0} ETH`} />
                     </Grid>
-                </Grid>
-                <PLGraph />
+                </Grid> */}
+                {/* <PLGraph /> */}
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={4}>
                         <StatsCard icon='/static/icons/total-buy.svg' title='Total Buy' value={`${stats?.totalBuy || 0} ETH`} subTitle={`${stats?.buyCount || 0} Items bought`} />

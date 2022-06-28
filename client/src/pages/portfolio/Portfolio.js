@@ -82,6 +82,7 @@ export default function Portfolio() {
     const [sideItem, setSideItem] = useState('overview');
     const [wallet, setWallet] = useState('');
     const [visibleAddForm, setVisibleAddForm] = useState(false);
+    const [selectedWallet, setSelectedWallet] = useState('');
 
     useEffect(() => {
         startAnalyse();
@@ -155,6 +156,7 @@ export default function Portfolio() {
             ...wallets,
             address
         ]);
+        setSelectedWallet(address);
     };
 
     const addWallet = () => {
@@ -162,10 +164,6 @@ export default function Portfolio() {
             handleAddTab(wallet);
         }
         closeAddForm();
-    };
-
-    const changeIncludeGas = (e) => {
-        setIncludeGas(e.target.checked);
     };
 
     const handleClose = (e, tabId) => {
@@ -218,7 +216,6 @@ export default function Portfolio() {
                                     ))
                                 }
 
-
                                 {/* Wallet addresses */}
                                 {
                                     wallets.map(child => (
@@ -242,6 +239,7 @@ export default function Portfolio() {
                                                     </MuiIcon>
                                                 </IconButton>
                                             }
+                                            onClick={() => setSelectedWallet(child)}
                                         >
                                             <ListItemIcon>
                                                 <Box
@@ -285,6 +283,7 @@ export default function Portfolio() {
                                     )
                                 }
 
+                                {/* Add new wallet form */}
                                 {
                                     visibleAddForm && (
                                         <ListItem
@@ -312,7 +311,6 @@ export default function Portfolio() {
                                         </ListItem>
                                     )
                                 }
-
                             </SecondaryList>
                         </Card>
                     </Grid>
@@ -389,7 +387,7 @@ export default function Portfolio() {
                                 </Stack>
                             }
                             {
-                                sideItem === 'overview' && <Stat wallets={wallets} setWallets={setWallets} getAllData={getAllData} />
+                                sideItem === 'overview' && <Stat selectedWallet={selectedWallet} />
                             }
                             {
                                 sideItem === 'holdings' && <Holding />

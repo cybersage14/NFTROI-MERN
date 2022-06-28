@@ -66,6 +66,6 @@ export const SecondaryListItemButton = styled(ListItemButton)(({ theme }) => ({
   }
 }));
 
-export const PrimaryBox = styled(Box)(({ theme }) => ({
+export const PrimaryStack = styled(Stack)(({ theme }) => ({
   backgroundImage: `linear-gradient(to right, ${COLOR_PRIMARY_GRADIENT_LEFT}, ${COLOR_PRIMARY_GRADIENT_RIGHT})`,
 }));
