@@ -1,6 +1,7 @@
 import { Card, TableRow } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import TableCell from '@mui/material/TableCell';
+import { COLOR_WHITE } from '../utils/constants';
 
 export const StyledCard = styled(Card)({
     backgroundColor: "rgb(62, 62, 62)",
@@ -16,7 +17,8 @@ export const StyledHeaderCell = styled(TableCell)({
     '&.MuiTableCell-root': {
         backgroundColor: 'transparent',
         boxShadow: 'none',
-        borderRadius: '20px'
+        borderRadius: '20px',
+        color: COLOR_WHITE
     }
 });
 

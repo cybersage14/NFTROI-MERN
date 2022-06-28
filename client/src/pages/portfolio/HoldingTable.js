@@ -2,7 +2,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,9 +17,18 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { Avatar, Stack, Typography } from '@mui/material'
+import { Avatar, Stack, Typography, Box } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { StyledHeaderCell, StyledBodyCell, StyledTableRow } from '../StyledComponent'
+import { StyledHeaderCell, StyledBodyCell, StyledTableRow } from '../StyledComponent';
+import { 
+  COLOR_ERROR, 
+  COLOR_SECONDARY, 
+  COLOR_SECONDARY_BRIGHT, 
+  COLOR_SUCCESS, 
+  FONT_SIZE_BODY1_DESKTOP, 
+  FONT_SIZE_BODY2_DESKTOP, 
+  FONT_WEIGHT_NORMAL 
+} from '../../utils/constants';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -163,21 +171,26 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } =
-    props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   return (
-    <TableHead>
+    <TableHead
+      sx={{
+        borderTop: `1px solid ${COLOR_SECONDARY}`,
+        borderBottom: `1px solid ${COLOR_SECONDARY}`
+      }}
+    >
       <TableRow>
         {headCells.map((headCell) => (
           <StyledHeaderCell
             key={headCell.id}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
+            {headCell.label}
+            {/* <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
@@ -188,7 +201,7 @@ function EnhancedTableHead(props) {
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </Box>
               ) : null}
-            </TableSortLabel>
+            </TableSortLabel> */}
           </StyledHeaderCell>
         ))}
       </TableRow>
@@ -208,7 +221,7 @@ function PLCell({ value, icon, bgColor }) {
       <Typography variant='body2'>{value}</Typography>
       <Box component='img' src={icon} width='36px' height='36px' />
     </Stack>
-  )
+  );
 }
 
 export default function HoldingTable({ nfts }) {
@@ -238,113 +251,259 @@ export default function HoldingTable({ nfts }) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - nfts?.length) : 0;
 
   return (
-    <Box sx={{ width: '100%', mt: 2 }}>
-      <Paper sx={{ width: '100%', backgroundColor: '#2c2c2c', p: 1, border: '1px solid grey' }}>
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+    <Stack mt={2} width="100%" spacing={3}>
+      {/* Table Head */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        py={2}
+        px={2}
+        borderBottom={`1px solid ${COLOR_SECONDARY}`}
+        borderTop={`1px solid ${COLOR_SECONDARY}`}
+      >
+        <Box width="35%">
+          <Typography fontWeight={FONT_WEIGHT_NORMAL} fontSize={FONT_SIZE_BODY1_DESKTOP}>
+            Collections
+          </Typography>
+        </Box>
+        <Box width="10%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            textAlign="center"
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >Last Buy</Typography>
+        </Box>
+        <Box width="10%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            textAlign="center"
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
           >
-            <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={nfts?.length}
-            />
-            <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+            Previous<br />Avrg.Price
+          </Typography>
+        </Box>
+        <Box width="15%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            textAlign="center"
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >
+            Current<br />Avrg.Price
+          </Typography>
+        </Box>
+        <Box width="15%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            textAlign="center"
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >
+            Estimated<br />Value
+          </Typography>
+        </Box>
+      </Stack>
+
+      {
+        nfts?.length &&
+          stableSort(nfts, getComparator(order, orderBy))
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((row, index) => (
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                p={2}
+                bgcolor={COLOR_SECONDARY_DARK}
+                borderRadius={1}
+                key={index}
+              >
+                {/* Collections */}
+                <Stack width="35%" direction="row" spacing={1} alignItems="center">
+                  <Avatar src={row.image} width="64px" height="64px" sx={{ border: `2px solid ${row.estimatePL >= 0 ? '#5CDD90' : '#DD5C5C'}` }} />
+                  <Typography fontSize={FONT_SIZE_BODY2_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+                    {row.name}
+                  </Typography>
+                </Stack>
+
+                {/* Last Buy */}
+                <Stack width="10%" direction="row" justifyContent="center" spacing={1}>
+                  <MuiIcon fontSize={FONT_SIZE_BODY1_DESKTOP}>
+                    <Icon icon="logos:ethereum" />
+                  </MuiIcon>
+                  <Typography fontSize={FONT_SIZE_BODY2_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+                    {`${row.price} ETH`}
+                  </Typography>
+                </Stack>
+
+                {/* Previous Avrg.prices */}
+                <Stack width="10%" direction="row" justifyContent="center" spacing={1}>
+                  <MuiIcon fontSize={FONT_SIZE_BODY1_DESKTOP}>
+                    <Icon icon="logos:ethereum" />
+                  </MuiIcon>
+                  <Typography fontSize={FONT_SIZE_BODY2_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+                    {`${row.curAvg} ETH`}
+                  </Typography>
+                </Stack>
+
+                {/* Current Avrg.Prices */}
+                <Stack width="15%" direction="row" justifyContent="center" spacing={1}>
+                  <MuiIcon fontSize={FONT_SIZE_BODY1_DESKTOP}>
+                    <Icon icon="logos:ethereum" />
+                  </MuiIcon>
+
+                  <Typography fontSize={FONT_SIZE_BODY2_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+                    {`${row.curAvg} ETH`}
+                  </Typography>
+
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1}
+                    color={row.curAvg >= row.prevAvg ? COLOR_SUCCESS : COLOR_ERROR}
+                  >
+                    <Typography fontSize={FONT_SIZE_BODY2_DESKTOP - 2}>
+                      {`(${((row.curAvg - row.prevAvg) / row.prevAvg * 100).toFixed(2)}%)`}
+                    </Typography>
+
+                    <MuiIcon fontSize={FONT_SIZE_BODY1_DESKTOP}>
+                      <Icon icon={row.curAvg >= row.prevAvg ? "bi:caret-up-fill" : "bi:caret-down-fill"} />
+                    </MuiIcon>
+                  </Stack>
+                </Stack>
+
+                {/* Estimated Value */}
+                <Stack width="15%" direction="row" justifyContent="center" spacing={1}>
+                  <MuiIcon fontSize={FONT_SIZE_BODY1_DESKTOP}>
+                    <Icon icon="logos:ethereum" />
+                  </MuiIcon>
+
+                  <Typography fontSize={FONT_SIZE_BODY2_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+                    {`${row.estimateValue} ETH`}
+                  </Typography>
+
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1}
+                    color={row.estimateValue >= row.price ? COLOR_SUCCESS : COLOR_ERROR}
+                  >
+                    <Typography fontSize={FONT_SIZE_BODY2_DESKTOP - 2}>
+                      {`(${((row.estimateValue - row.price) / row.price * 100).toFixed(2)}%)`}
+                    </Typography>
+
+                    <MuiIcon fontSize={FONT_SIZE_BODY1_DESKTOP}>
+                      <Icon icon={row.estimateValue >= row.price ? "bi:caret-up-fill" : "bi:caret-down-fill"} />
+                    </MuiIcon>
+                  </Stack>
+                </Stack>
+              </Stack>
+            ))
+        }
+
+
+      <TableContainer component={Box}>
+        <Table
+          aria-labelledby="tableTitle"
+          size={dense ? 'small' : 'medium'}
+        >
+          <EnhancedTableHead
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+            rowCount={nfts?.length}
+          />
+          <TableBody>
+            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  nfts?.slice().sort(getComparator(order, orderBy)) */}
-              {nfts?.length ?
-                stableSort(nfts, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    return (
-                      <TableRow
-                        key={index}
-                        style={{
-                          backgroundColor: row.estimatePL >= 0 ? '#3A453E' : '#744441',
-                          borderTop: '10px solid #2c2c2c',
-                          borderBottom: '10px solid #2c2c2c'
-                        }}
-                      >
-                        <StyledBodyCell align="left" sx={{ width: '25%' }}>
-                          <Stack direction='row' spacing={2} alignItems='center'>
-                            <Avatar src={row.image} width="64px" height="64px" sx={{ border: `3px solid ${row.estimatePL >= 0 ? '#5CDD90' : '#DD5C5C'}` }} />
-                            <Typography variant='body2'>
-                              {row.name}
-                            </Typography>
-                          </Stack>
-                        </StyledBodyCell>
-                        <StyledBodyCell align="center" sx={{ width: '8%' }}>
-                          <Stack direction='row' spacing={1} alignItems='center'>
-                            <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
-                            <Typography variant='body2'>{`${row.price} ETH`}</Typography>
-                          </Stack>
-                        </StyledBodyCell>
-                        <StyledBodyCell align="center" sx={{ width: '8%' }}>
-                          <Stack direction='row' spacing={1} alignItems='center'>
-                            <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
-                            <Typography variant='body2'>{`${row.prevAvg} ETH`}</Typography>
-                          </Stack>
-                        </StyledBodyCell>
-                        <StyledBodyCell align="center" sx={{ width: '12%', paddingLeft:'0px' }}>
-                          <Stack direction='row' spacing={1} alignItems='center'>
-                            <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
-                            <Typography variant='body2'>{`${row.curAvg} ETH`}</Typography>
-                            <Stack direction='row' alignItems='center'>
-                              <Typography variant='caption' color={row.curAvg >= row.prevAvg ? 'success.main' : 'error.main'}>
-                                {`(${((row.curAvg - row.prevAvg) / row.prevAvg * 100).toFixed(2)}%)`}
-                              </Typography>
-                              <Box component='img' src={row.curAvg >= row.prevAvg ? '/static/icons/up-tri.svg' : '/static/icons/down-tri.svg'} width='10px' height='6px' />
-                            </Stack>
-                          </Stack>
-                        </StyledBodyCell>
-                        <StyledBodyCell align="center" sx={{ width: '12%', paddingLeft:'0px' }}>
-                          <Stack direction='row' spacing={1} alignItems='center'>
-                            <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
-                            <Typography variant='body2'>{`${row.estimateValue} ETH`}</Typography>
-                            <Stack direction='row' alignItems='center'>
-                              <Typography variant='caption' color={row.estimateValue >= row.price ? 'success.main' : 'error.main'}>
-                                {`(${((row.estimateValue - row.price) / row.price * 100).toFixed(2)}%)`}
-                              </Typography>
-                              <Box component='img' src={row.estimateValue >= row.price ? '/static/icons/up-tri.svg' : '/static/icons/down-tri.svg'} width='10px' height='6px' />
-                            </Stack>
-                          </Stack>
-                        </StyledBodyCell>
-                        <StyledBodyCell align="center" sx={{ width: '15%' }}>
-                          <PLCell value={row.estimatePL_percent} icon={row.estimatePL >= 0 ? '/static/icons/pl-up.svg' : '/static/icons/pl-down.svg'} bgColor={row.estimatePL >= 0 ? '#5CDD90' : '#DD5C5C'} />
-                        </StyledBodyCell>
-                      </TableRow>
-                    );
-                  })
-                : <></>
-              }
+            {nfts?.length ?
+              stableSort(nfts, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  return (
+                    // <TableRow
+                    //   key={index}
+                    //   style={{
+                    //     backgroundColor: row.estimatePL >= 0 ? '#3A453E' : '#744441',
+                    //     // borderTop: '10px solid #2c2c2c',
+                    //     // borderBottom: '10px solid #2c2c2c'
+                    //   }}
+                    // >
+                    //   <StyledBodyCell align="left" sx={{ width: '25%' }}>
+                    //     <Stack direction='row' spacing={2} alignItems='center'>
+                    //       <Avatar src={row.image} width="64px" height="64px" sx={{ border: `3px solid ${row.estimatePL >= 0 ? '#5CDD90' : '#DD5C5C'}` }} />
+                    //       <Typography variant='body2'>
+                    //         {row.name}
+                    //       </Typography>
+                    //     </Stack>
+                    //   </StyledBodyCell>
+                    //   <StyledBodyCell align="center" sx={{ width: '8%' }}>
+                    //     <Stack direction='row' spacing={1} alignItems='center'>
+                    //       <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
+                    //       <Typography variant='body2'>{`${row.price} ETH`}</Typography>
+                    //     </Stack>
+                    //   </StyledBodyCell>
+                    //   <StyledBodyCell align="center" sx={{ width: '8%' }}>
+                    //     <Stack direction='row' spacing={1} alignItems='center'>
+                    //       <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
+                    //       <Typography variant='body2'>{`${row.prevAvg} ETH`}</Typography>
+                    //     </Stack>
+                    //   </StyledBodyCell>
+                    //   <StyledBodyCell align="center" sx={{ width: '12%', paddingLeft: '0px' }}>
+                    //     <Stack direction='row' spacing={1} alignItems='center'>
+                    //       <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
+                    //       <Typography variant='body2'>{`${row.curAvg} ETH`}</Typography>
+                    //       <Stack direction='row' alignItems='center'>
+                    //         <Typography variant='caption' color={row.curAvg >= row.prevAvg ? 'success.main' : 'error.main'}>
+                    //           {`(${((row.curAvg - row.prevAvg) / row.prevAvg * 100).toFixed(2)}%)`}
+                    //         </Typography>
+                    //         <Box component='img' src={row.curAvg >= row.prevAvg ? '/static/icons/up-tri.svg' : '/static/icons/down-tri.svg'} width='10px' height='6px' />
+                    //       </Stack>
+                    //     </Stack>
+                    //   </StyledBodyCell>
+                    //   <StyledBodyCell align="center" sx={{ width: '12%', paddingLeft: '0px' }}>
+                    //     <Stack direction='row' spacing={1} alignItems='center'>
+                    //       <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
+                    //       <Typography variant='body2'>{`${row.estimateValue} ETH`}</Typography>
+                    //       <Stack direction='row' alignItems='center'>
+                    //         <Typography variant='caption' color={row.estimateValue >= row.price ? 'success.main' : 'error.main'}>
+                    //           {`(${((row.estimateValue - row.price) / row.price * 100).toFixed(2)}%)`}
+                    //         </Typography>
+                    //         <Box component='img' src={row.estimateValue >= row.price ? '/static/icons/up-tri.svg' : '/static/icons/down-tri.svg'} width='10px' height='6px' />
+                    //       </Stack>
+                    //     </Stack>
+                    //   </StyledBodyCell>
+                    //   <StyledBodyCell align="center" sx={{ width: '15%' }}>
+                    //     <PLCell value={row.estimatePL_percent} icon={row.estimatePL >= 0 ? '/static/icons/pl-up.svg' : '/static/icons/pl-down.svg'} bgColor={row.estimatePL >= 0 ? '#5CDD90' : '#DD5C5C'} />
+                    //   </StyledBodyCell>
+                    // </TableRow>
+                  );
+                })
+              : <></>
+            }
 
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[10, 15, 20, { label: 'All', value: -1 }]}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[10, 15, 20, { label: 'All', value: -1 }]}
 
-                  count={nfts?.length || 0}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      'aria-label': 'rows per page',
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </Box>
+                count={nfts?.length || 0}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    'aria-label': 'rows per page',
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </Stack>
   );
 }
