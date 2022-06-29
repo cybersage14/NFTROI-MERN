@@ -1,8 +1,34 @@
-export * from './controls';
-export { default as CarouselAnimation } from './CarouselAnimation';
-export { default as CarouselBasic1 } from './CarouselBasic1';
-export { default as CarouselBasic2 } from './CarouselBasic2';
-export { default as CarouselBasic3 } from './CarouselBasic3';
-export { default as CarouselBasic4 } from './CarouselBasic4';
-export { default as CarouselCenterMode } from './CarouselCenterMode';
-export { default as CarouselThumbnail } from './CarouselThumbnail';
+import React, { useRef, createElement } from 'react';
+import { styled } from "@mui/material";
+import Slider from 'react-slick';
+import CarouselControlArrows from './CarouselControlArrows';
+
+const RootStyle = styled('div')(({ theme }) => ({
+  position: 'relative'
+}));
+
+export default function Carousel({ data, slideSettings, carouselItemComponent }) {
+  const carouselRef = useRef();
+
+  const handlePrevious = () => {
+    carouselRef.current.slickPrev();
+  };
+
+  const handleNext = () => {
+    carouselRef.current.slickNext();
+  };
+
+  return (
+    <RootStyle>
+      <Slider ref={carouselRef} {...slideSettings}>
+        {data.map((dataItem, index) => (
+          createElement(carouselItemComponent, {
+            key: index,
+            dataItem
+          })
+        ))}
+      </Slider>
+      <CarouselControlArrows onNext={handleNext} onPrevious={handlePrevious} />
+    </RootStyle>
+  );
+}

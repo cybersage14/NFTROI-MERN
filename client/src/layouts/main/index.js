@@ -1,14 +1,7 @@
 /* eslint-disable */
-import { Link as ScrollLink } from 'react-scroll';
 import { useLocation, Outlet } from 'react-router-dom';
-// material
-import { Box, Link, Container, Typography } from '@mui/material';
-// components
-import Logo from '../../components/Logo';
-//
-import MainNavbar from './MainNavbar';
-import MainFooter from './MainFooter';
 import MainTopNavbar from './MainTopNavbar';
+import MainBottomNavbar from './MainBottomNavbar';
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +16,7 @@ export default function MainLayout() {
       <div>
         <Outlet />
       </div>
+      <MainBottomNavbar />
     </>
   );
 }

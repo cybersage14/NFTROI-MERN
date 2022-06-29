@@ -390,35 +390,39 @@ export default function HoldingTable({ nfts }) {
           ))
       }
 
-      <Stack direction="row" justifyContent="end">
-        <Stack
-          width={100}
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          bgcolor={COLOR_SECONDARY}
-          p={1}
-          borderRadius={1}
-        >
-          <IconButton
-            sx={{ fontSize: FONT_SIZE_BODY1_DESKTOP, color: COLOR_SECONDARY_BRIGHT }}
-            onClick={() => handleChangePage(page - 1)}
-            disabled={nfts.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage).length < 1}
-          >
-            <Icon icon="akar-icons:chevron-left" />
-          </IconButton>
-          <Typography component="span" fontSize={FONT_SIZE_BODY1_DESKTOP}>
-            {page + 1}
-          </Typography>
-          <IconButton
-            sx={{ fontSize: FONT_SIZE_BODY1_DESKTOP, color: COLOR_SECONDARY_BRIGHT }}
-            onClick={() => handleChangePage(page + 1)}
-            disabled={nfts.slice((page + 1) * rowsPerPage, (page + 1) * rowsPerPage + rowsPerPage).length < 1}
-          >
-            <Icon icon="akar-icons:chevron-right" />
-          </IconButton>
-        </Stack>
-      </Stack>
+      {
+        nfts?.length > 0 && (
+          <Stack direction="row" justifyContent="end">
+            <Stack
+              width={100}
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              bgcolor={COLOR_SECONDARY}
+              p={1}
+              borderRadius={1}
+            >
+              <IconButton
+                sx={{ fontSize: FONT_SIZE_BODY1_DESKTOP, color: COLOR_SECONDARY_BRIGHT }}
+                onClick={() => handleChangePage(page - 1)}
+                disabled={nfts.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage).length < 1}
+              >
+                <Icon icon="akar-icons:chevron-left" />
+              </IconButton>
+              <Typography component="span" fontSize={FONT_SIZE_BODY1_DESKTOP}>
+                {page + 1}
+              </Typography>
+              <IconButton
+                sx={{ fontSize: FONT_SIZE_BODY1_DESKTOP, color: COLOR_SECONDARY_BRIGHT }}
+                onClick={() => handleChangePage(page + 1)}
+                disabled={nfts.slice((page + 1) * rowsPerPage, (page + 1) * rowsPerPage + rowsPerPage).length < 1}
+              >
+                <Icon icon="akar-icons:chevron-right" />
+              </IconButton>
+            </Stack>
+          </Stack>
+        )
+      }
     </Stack>
   );
 }
