@@ -17,7 +17,6 @@ import {
     ListItemIcon,
     Box,
     Icon as MuiIcon,
-    Button,
     IconButton,
     ListItemButton,
     InputAdornment
@@ -47,11 +46,6 @@ import {
     FONT_SIZE_H2_DESKTOP,
     FONT_SIZE_H3_DESKTOP
 } from '../../utils/constants';
-
-const RootStyle = styled(Page)({
-    height: '100%',
-    paddingTop: '100px'
-});
 
 // ----------------------------------------------------------------------
 
@@ -186,8 +180,11 @@ export default function Portfolio() {
     }, [wallets.length]);
 
     return (
-        <RootStyle title="nftroi" id="move_top">
-            <Container maxWidth="xl">
+        <Box position="relative" overflow="hidden" minHeight="91.5vh">
+            <Container
+                maxWidth="xl"
+                sx={{ position: 'relative', zIndex: 30, pt: 10, pb: 20 }}
+            >
                 <Grid container spacing={8}>
                     <Grid item xs={12} md={3}>
                         <Card sx={{ borderRadius: 1 }}>
@@ -376,9 +373,9 @@ export default function Portfolio() {
                             </Typography>
 
                             {/* <Stack direction={{ md: 'row', xs: 'column' }} spacing={1} justifyContent='center' alignItems="center">
-                                <TabBar wallets={wallets} setWallets={setWallets} />
-                                <Button variant='contained' onClick={analyse}>Analyse</Button>
-                            </Stack> */}
+                                    <TabBar wallets={wallets} setWallets={setWallets} />
+                                    <Button variant='contained' onClick={analyse}>Analyse</Button>
+                                </Stack> */}
                             {
                                 loading &&
                                 <Stack direction='row' justifyContent='center' alignItems='center'>
@@ -400,6 +397,36 @@ export default function Portfolio() {
                     </Grid>
                 </Grid>
             </Container>
-        </RootStyle>
+            <Box
+                component="img"
+                src="assets/images/wave-portfolio.svg"
+                alt=""
+                width="100%"
+                position="absolute"
+                top="20%"
+                zIndex={10}
+            />
+            <Box
+                component="img"
+                src="assets/images/gradient-portfolio-left.svg"
+                alt=""
+                width="100%"
+                height=""
+                position="absolute"
+                bottom={0}
+                left={0}
+                zIndex={20}
+            />
+            <Box
+                component="img"
+                src="assets/images/gradient-portfolio-right.svg"
+                alt=""
+                width="100%"
+                position="absolute"
+                bottom={0}
+                right={0}
+                zIndex={20}
+            />
+        </Box>
     );
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, IconButton, styled } from '@mui/material';
 import { Icon } from '@iconify/react';
 import {
-  COLOR_PRIMARY,
   COLOR_SECONDARY_DARK,
   COLOR_PRIMARY_GRADIENT_LEFT,
   COLOR_PRIMARY_GRADIENT_RIGHT

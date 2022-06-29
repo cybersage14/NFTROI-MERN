@@ -1,11 +1,10 @@
 /* eslint-disable */
-import React, { createElement, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { createElement } from 'react';
+import { useSelector } from 'react-redux';
 import Web3 from 'web3';
-import Slider from "react-slick";
 // material
 import {
-    Stack, Typography, Box, Grid, Card, CardHeader, CardMedia, CardContent, Icon as MuiIcon
+    Stack, Typography, Box, Card, CardHeader, CardMedia, CardContent, Icon as MuiIcon
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 // components
@@ -151,7 +150,7 @@ export default function Holding() {
     const stats = useSelector(state => state.manager.stats);
 
     return (
-        <Box mb={20}>
+        <Box>
             <HoldingTable nfts={nfts} />
             {
                 stats && (
