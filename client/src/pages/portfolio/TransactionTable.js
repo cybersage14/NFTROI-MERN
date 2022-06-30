@@ -23,9 +23,28 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { visuallyHidden } from '@mui/utils';
-import { FormGroup, FormControlLabel, Checkbox, Stack, Avatar, Typography } from '@mui/material';
-import { StyledHeaderCell, StyledBodyCell, StyledTableRow } from '../StyledComponent';
-import { URL_TRANSACTION } from '../../utils/constants';
+import {
+  Stack,
+  Avatar,
+  Typography,
+  Icon as MuiIcon
+} from '@mui/material';
+import { Icon } from '@iconify/react';
+import { StyledHeaderCell } from '../StyledComponent';
+import {
+  COLOR_ERROR,
+  COLOR_SECONDARY,
+  COLOR_SUCCESS,
+  COLOR_SUCCESS_SECONDARY,
+  FONT_SIZE_BODY1_DESKTOP,
+  FONT_WEIGHT_NORMAL,
+  URL_TRANSACTION,
+  COLOR_SECONDARY_BRIGHT,
+  COLOR_WHITE_OPACITY_TEN,
+  COLOR_INFO,
+  COLOR_INFO_BRIGHT,
+  FONT_SIZE_H3_DESKTOP
+} from '../../utils/constants';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -87,46 +106,6 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
 };
-
-function descendingComparator(a, b, orderBy) {
-  if (orderBy === 'date') {
-    if (b.block < a.block) {
-      return -1;
-    }
-    if (b.block > a.block) {
-      return 1;
-    }
-    return 0;
-  } else {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-  const stabilizedThis = array?.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
 
 const headCells = [
   {
@@ -213,357 +192,536 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired
 };
 
-function ActionCell({ action }) {
-  return (
-    <Stack direction='row' alignItems='center' spacing={2}>
-      {
-        action === 'SELL' &&
-        <>
-          <Box sx={{ border: '1px solid #5CDD90', borderRadius: '50%', width: '36px', height: '36px', padding: '4px' }}>
-            <Box component='img' src='/static/icons/sell-action.svg' width='24px' height='24px' />
-          </Box>
-          <Typography sx={{ color: '#5CDD90' }}>{action}</Typography>
-        </>
-      }
-      {
-        action === 'BUY' &&
-        <>
-          <Box sx={{ border: '1px solid #2057D7', borderRadius: '50%', width: '36px', height: '36px', padding: '4px' }}>
-            <Box component='img' src='/static/icons/buy-action.svg' width='24px' height='24px' />
-          </Box>
-          <Typography sx={{ color: '#2057D7' }}>{action}</Typography>
-        </>
-      }
-      {
-        action === 'TRANSFER' &&
-        <>
-          <Box sx={{ border: '1px solid #16F1FF', borderRadius: '50%', width: '36px', height: '36px', padding: '4px' }}>
-            <Box component='img' src='/static/icons/transfer-action.svg' width='24px' height='24px' />
-          </Box>
-          <Typography sx={{ color: '#16F1FF' }}>{action}</Typography>
-        </>
-      }
-      {
-        action === 'SELL(Bid Won)' &&
-        <>
-          <Avatar src='/static/icons/sell-action.svg' width='36px' height='36px' sx={{ border: '1px solid #5CDD90' }} />
-          <Typography sx={{ color: '#5CDD90' }}>{action}</Typography>
-        </>
-      }
-      {
-        action === 'BUY(Bid Won)' &&
-        <>
-          <Avatar src='/static/icons/buy-action.svg' width='36px' height='36px' sx={{ border: '1px solid #2057D7' }} />
-          <Typography sx={{ color: '#2057D7' }}>{action}</Typography>
-        </>
-      }
-      {
-        action === 'MINT' &&
-        <>
-          <Avatar src='/static/icons/transfer-action.svg' width='36px' height='36px' sx={{ border: '1px solid #16F1FF' }} />
-          <Typography sx={{ color: '#16F1FF' }}>{action}</Typography>
-        </>
-      }
-      {
-        action === 'AIRDROP' &&
-        <>
-          <Avatar src='/static/icons/transfer-action.svg' width='36px' height='36px' sx={{ border: '1px solid #16F1FF' }} />
-          <Typography sx={{ color: '#16F1FF' }}>{action}</Typography>
-        </>
-      }
-      {
-        action === 'LIST' &&
-        <>
-          <Avatar src='/static/icons/transfer-action.svg' width='36px' height='36px' sx={{ border: '1px solid #16F1FF' }} />
-          <Typography sx={{ color: '#16F1FF' }}>{action}</Typography>
-        </>
-      }
-      {
-        action === 'CANCELLED LIST' &&
-        <>
-          <Avatar src='/static/icons/transfer-action.svg' width='36px' height='36px' sx={{ border: '1px solid #16F1FF' }} />
-          <Typography sx={{ color: '#16F1FF' }}>{action}</Typography>
-        </>
-      }
-    </Stack>
-  );
-}
-
-function PLCell({ value, icon, bgColor }) {
-  return (
-    <Stack direction='row' justifyContent='space-around' alignItems='center' sx={{ borderRadius: '6px', backgroundColor: bgColor }}>
-      <Typography variant='body2'>{value}</Typography>
-      <Box component='img' src={icon} width='36px' height='36px' />
-    </Stack>
-  );
-}
-
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
+const DataRow = ({ row }) => {
+  const [open, setOpen] = useState(false);
 
   return (
-    <React.Fragment>
-      <TableRow
-        sx={{
-          backgroundColor:
-            row.action.includes('SELL') ?
-              '#3A453E'
-              : row.action.includes('BUY') ?
-                '#212B4B'
-                :
-                '#265658',
-          borderTop: '10px solid #2c2c2c',
-          borderBottom: '10px solid #2c2c2c'
-        }}
+    <Stack
+      spacing={2}
+      p={2}
+      bgcolor={COLOR_SECONDARY}
+      borderRadius={1}
+    >
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={1}
       >
-        <StyledBodyCell align="left">
-          <Stack direction='row' spacing={2} alignItems='center'>
-            {
-              row.collapse.length > 1 &&
-              <IconButton
-                aria-label="expand row"
-                size="small"
-                onClick={() => setOpen(!open)}
-              >
-                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-            }
-            <Avatar src={row.image} width="48px" height="48px" sx={{ border: `3px solid ${row.pl >= 0 ? '#5CDD90' : '#DD5C5C'}` }} />
-            {console.log('# row => ', row)}
-            <Typography
-              variant='body2'
-              component="a"
-              href={`${URL_TRANSACTION}/${row.hash}`}
-              target="_blank"
-              color="white"
-              sx={{ textDecoration: 'none' }}
-            >
-              {row.count > 1 ? `${row.name} x${row.count}` : row.name}
-            </Typography>
-          </Stack>
-        </StyledBodyCell>
-        <StyledBodyCell align="left">
-          <ActionCell action={row.action} />
-        </StyledBodyCell>
-        <StyledBodyCell align="left">{row.date}</StyledBodyCell>
-        <StyledBodyCell align="left">
-          <Stack direction='row' spacing={1} alignItems='center'>
-            <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
-            <Typography variant='body2'>{`${row.value} ETH`}</Typography>
-          </Stack>
-
-        </StyledBodyCell>
-        <StyledBodyCell align="left">
-          <Stack direction='row' spacing={1} alignItems='center'>
-            <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
-            <Typography variant='body2'>{`${row.totalFee} ETH`}</Typography>
-          </Stack>
-        </StyledBodyCell>
-        <StyledBodyCell align="left">
-          <Stack direction='row' spacing={1} alignItems='center'>
-            <Box component='img' src='/static/icons/eth.svg' width='11px' height='22px' />
-            <Typography variant='body2'>{`${row.net} eth`}</Typography>
-          </Stack>
-        </StyledBodyCell>
-        <StyledBodyCell align="left">
+        {/* Collections */}
+        <Stack width="25%" direction="row" spacing={2} alignItems="center">
           {
-            row.action === 'SELL' || row.action === 'SELL(Bid Won)' ?
-
-              <PLCell value={`${row.pl} eth`} icon={row.pl >= 0 ? '/static/icons/pl-up.svg' : '/static/icons/pl-down.svg'} bgColor={row.pl >= 0 ? '#5CDD90' : '#DD5C5C'} />
-              :
-              `-`
+            row.collapse.length > 1 &&
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
           }
-        </StyledBodyCell>
-      </TableRow>
-      {
-        row.collapse.length > 1 &&
-        <StyledTableRow>
-          <StyledBodyCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Table size="small" aria-label="purchases">
-                  <TableBody>
-                    {row.collapse.map((item, index) => (
-                      <TableRow key={index} sx={{
-                        backgroundColor:
-                          row.action.includes('SELL') ?
-                            '#3A453E'
-                            : row.action.includes('BUY') ?
-                              '#212B4B'
-                              :
-                              '#265658',
-                        borderTop: '10px solid #121b3c',
-                        borderBottom: '10px solid #121b3c'
-                      }}>
-                        {console.log('# item => ', item)}
-                        <StyledBodyCell align="left">
-                          <Stack direction='row' spacing={2} alignItems='center'>
-                            <Avatar src={item.image} width="48px" height="48px" sx={{ border: `3px solid ${row.pl >= 0 ? '#5CDD90' : '#DD5C5C'}` }} />
-                            <Typography
-                              variant='body2'
-                            >
-                              {item.name}
-                            </Typography>
-                          </Stack>
-                        </StyledBodyCell>
-                        <StyledBodyCell align="left">{`${item.value} eth`} </StyledBodyCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
-          </StyledBodyCell>
-        </StyledTableRow>
-      }
-    </React.Fragment >
+          <Avatar
+            src={row.image}
+            sx={{
+              border: `2px solid ${row.pl >= 0 ? COLOR_SUCCESS : COLOR_ERROR}`,
+              width: 60,
+              height: 60
+            }}
+          />
+          <Typography
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+            color={COLOR_SECONDARY_BRIGHT}
+            component="a"
+            href={`${URL_TRANSACTION}/${row.hash}`}
+            target="_blank"
+            sx={{ textDecoration: 'none' }}
+          >
+            {row.count > 1 ? `${row.name} x${row.count}` : row.name}
+          </Typography>
+        </Stack>
+
+        {/* Action */}
+        <Stack width="10%" direction="row" spacing={1} alignItems="center">
+          {
+            row.action === 'SELL' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_SUCCESS_SECONDARY,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="fa-solid:hand-holding-usd" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_SUCCESS_SECONDARY}
+                textTransform="capitalize"
+              >Sell</Typography>
+            </>
+          }
+          {
+            row.action === 'BUY' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_INFO,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="clarity:shopping-cart-solid" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_INFO}
+                textTransform="capitalize"
+              >Buy</Typography>
+            </>
+          }
+          {
+            row.action === 'TRANSFER' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_INFO_BRIGHT,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="oi:transfer" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_INFO_BRIGHT}
+                textTransform="capitalize"
+              >Transfer</Typography>
+            </>
+          }
+          {
+            row.action === 'SELL(Bid Won)' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_SUCCESS_SECONDARY,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="fa-solid:hand-holding-usd" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_SUCCESS_SECONDARY}
+                textTransform="capitalize"
+              >Sell(Bid won)</Typography>
+            </>
+          }
+          {
+            row.action === 'BUY(Bid Won)' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_INFO,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="clarity:shopping-cart-solid" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_INFO}
+                textTransform="capitalize"
+              >Buy(Bid Won)</Typography>
+            </>
+          }
+          {
+            row.action === 'MINT' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_SUCCESS,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="file-icons:mint" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_SUCCESS}
+                textTransform="capitalize"
+              >Mint</Typography>
+            </>
+          }
+          {
+            row.action === 'AIRDROP' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_INFO_BRIGHT,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="fa6-solid:hand-holding-droplet" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_INFO_BRIGHT}
+                textTransform="capitalize"
+              >Airdrop</Typography>
+            </>
+          }
+          {
+            row.action === 'LIST' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_INFO_BRIGHT,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="bi:list-check" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_INFO_BRIGHT}
+                textTransform="capitalize"
+              >List</Typography>
+            </>
+          }
+          {
+            row.action === 'CANCELLED LIST' &&
+            <>
+              <Stack
+                width={30}
+                height={30}
+                borderRadius="50%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+              >
+                <MuiIcon
+                  sx={{
+                    color: COLOR_ERROR,
+                    fontSize: FONT_SIZE_BODY1_DESKTOP
+                  }}
+                >
+                  <Icon icon="fluent:text-bullet-list-dismiss-20-filled" />
+                </MuiIcon>
+              </Stack>
+              <Typography
+                fontSize={FONT_SIZE_BODY1_DESKTOP}
+                color={COLOR_ERROR}
+                textTransform="capitalize"
+              >Cancelled list</Typography>
+            </>
+          }
+        </Stack>
+
+        {/* From */}
+        <Stack width="7.5%" direction="row" spacing={1} alignItems="center">
+          <Box
+            component="img"
+            src="assets/images/wallet.png"
+            alt={row.from}
+            width={35}
+            height={35}
+            borderRadius="50%"
+          />
+        </Stack>
+
+        {/* To */}
+        <Stack width="7.5%" direction="row" spacing={1} alignItems="center">
+          <Box
+            component="img"
+            src="assets/images/wallet.png"
+            alt={row.to}
+            width={35}
+            height={35}
+            borderRadius="50%"
+          />
+        </Stack>
+
+        {/* Date */}
+        <Stack width="10%" direction="row" spacing={1} alignItems="center">
+          <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+            {row.date}
+          </Typography>
+        </Stack>
+
+        {/* Tx Value */}
+        <Stack width="10%" direction="row" alignItems="center">
+          <MuiIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
+            <Icon icon="logos:ethereum" />
+          </MuiIcon>
+          <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+            {`${row.value} ETH`}
+          </Typography>
+        </Stack>
+
+        {/* Total Fee */}
+        <Stack width="10%" direction="row" alignItems="center">
+          <MuiIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
+            <Icon icon="logos:ethereum" />
+          </MuiIcon>
+          <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+            {`${row.totalFee} ETH`}
+          </Typography>
+        </Stack>
+
+        {/* Net */}
+        <Stack width="10%" direction="row" alignItems="center">
+          <MuiIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
+            <Icon icon="logos:ethereum" />
+          </MuiIcon>
+          <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+            {`${row.net} ETH`}
+          </Typography>
+        </Stack>
+
+        {/* P/L */}
+        <Stack width="10%" direction="row" spacing={1} alignItems="center">
+          {
+            row.action === 'SELL' || row.action === 'SELL(Bid Won)' ? (
+              <Stack
+                bgcolor={COLOR_WHITE_OPACITY_TEN}
+                p={1.5}
+                borderRadius={1}
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Typography
+                  fontSize={FONT_SIZE_BODY1_DESKTOP}
+                  textAlign="center"
+                  color={row.pl >= 0 ? COLOR_SUCCESS : COLOR_ERROR}
+                >{`${row.pl} eth`}</Typography>
+              </Stack>
+            ) : <></>
+          }
+        </Stack>
+      </Stack>
+
+      <Collapse
+        in={open}
+        timeout="auto"
+        unmountOnExit
+      >
+        <Stack spacing={2}>
+          {
+            row.collapse.length > 1 && row.collapse.map((item, index) => (
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                spacing={1}
+                key={index}
+              >
+                {/* Collections */}
+                <Stack width="25%" direction="row" spacing={2} alignItems="center">
+                  <Avatar
+                    src={item.image}
+                    sx={{
+                      border: `2px solid ${row.pl >= 0 ? COLOR_SUCCESS : COLOR_ERROR}`,
+                      width: 60,
+                      height: 60
+                    }}
+                  />
+                  <Typography
+                    fontSize={FONT_SIZE_BODY1_DESKTOP}
+                    color={COLOR_SECONDARY_BRIGHT}
+                  >
+                    {item.name}
+                  </Typography>
+                </Stack>
+
+                {/* Action */}
+                <Stack width="10%" direction="row" spacing={1} alignItems="center" />
+
+                {/* From */}
+                <Stack width="7.5%" direction="row" spacing={1} alignItems="center" />
+
+                {/* To */}
+                <Stack width="7.5%" direction="row" spacing={1} alignItems="center" />
+
+                {/* Date */}
+                <Stack width="10%" direction="row" spacing={1} alignItems="center" />
+
+                {/* Tx Value */}
+                <Stack width="10%" direction="row" alignItems="center">
+                  <MuiIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
+                    <Icon icon="logos:ethereum" />
+                  </MuiIcon>
+                  <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY_BRIGHT}>
+                    {`${item.value} ETH`}
+                  </Typography>
+                </Stack>
+
+                {/* Total Fee */}
+                <Stack width="10%" direction="row" alignItems="center" />
+
+                {/* Net */}
+                <Stack width="10%" direction="row" alignItems="center" />
+
+                {/* P/L */}
+                <Stack width="10%" direction="row" spacing={1} alignItems="center" />
+              </Stack>
+            ))
+          }
+        </Stack>
+      </Collapse>
+    </Stack>
   );
-}
+};
 
 export default function TransactionTable({ transactions }) {
-  const [order, setOrder] = React.useState('desc');
-  const [orderBy, setOrderBy] = React.useState('date');
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [filter, setFilter] = useState(['ALL']);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
 
   useEffect(() => {
     setFilteredTransactions([...transactions]);
   }, [transactions]);
 
-  const changeFilter = (e) => {
-    if (e.target.checked) {
-      if (filter.indexOf(e.target.name) === -1) {
-        let newFilter;
-        if (e.target.name === 'ALL') {
-          newFilter = ['ALL'];
-          setFilter(newFilter);
-        } else {
-          newFilter = [...filter.filter(item => item !== 'ALL'), e.target.name];
-          setFilter();
-        }
-        setFilter(newFilter);
-        setFilteredTransactions(transactions.filter(item => {
-          if (newFilter.indexOf('ALL') >= 0) {
-            return true;
-          }
-          if (newFilter.indexOf(item.action) >= 0) {
-            return true;
-          }
-          return false;
-        }));
-      }
-    } else {
-      let newFilter = filter.filter(item => item !== e.target.name);
-      setFilter(newFilter);
-      setFilteredTransactions(transactions.filter(item => {
-        if (newFilter.indexOf('ALL') >= 0) {
-          return true;
-        }
-        if (newFilter.indexOf(item.action) >= 0) {
-          return true;
-        }
-        return false;
-      }));
-    }
-  };
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  // Avoid a layout jump when reaching the last page with empty transactions?.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - transactions?.length) : 0;
-
   return (
-    <Box sx={{ width: '100%', mt: 2 }}>
-      <Paper sx={{ width: '100%', backgroundColor: '#2c2c2c', p: 1, border: '1px solid grey' }}>
-        <FormGroup>
-          <Stack direction='row' spacing={1} justifyContent='center'>
-            <FormControlLabel control={<Checkbox name='ALL' checked={filter.indexOf('ALL') >= 0} onChange={changeFilter} />} label="All" />
-            <FormControlLabel control={<Checkbox name='BUY' checked={filter.indexOf('BUY') >= 0} onChange={changeFilter} />} label="Buy" />
-            <FormControlLabel control={<Checkbox name='BUY(Bid Won)' checked={filter.indexOf('BUY(Bid Won)') >= 0} onChange={changeFilter} />} label="Buy(Bid Won)" />
-            <FormControlLabel control={<Checkbox name='MINT' checked={filter.indexOf('MINT') >= 0} onChange={changeFilter} />} label="Mint" />
-            <FormControlLabel control={<Checkbox name='AIRDROP' checked={filter.indexOf('AIRDROP') >= 0} onChange={changeFilter} />} label="Airdrop" />
-            <FormControlLabel control={<Checkbox name='SELL' checked={filter.indexOf('SELL') >= 0} onChange={changeFilter} />} label="Sell" />
-            <FormControlLabel control={<Checkbox name='SELL(Bid Won)' checked={filter.indexOf('SELL(Bid Won)') >= 0} onChange={changeFilter} />} label="Sell(Bid Won)" />
-            <FormControlLabel control={<Checkbox name='TRANSFER' checked={filter.indexOf('TRANSFER') >= 0} onChange={changeFilter} />} label="Transfer" />
-            <FormControlLabel control={<Checkbox name='LIST' checked={filter.indexOf('LIST') >= 0} onChange={changeFilter} />} label="List" />
-            <FormControlLabel control={<Checkbox name='CANCELLED LIST' checked={filter.indexOf('CANCELLED LIST') >= 0} onChange={changeFilter} />} label="Cancelled List" />
-          </Stack>
-        </FormGroup>
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
-            <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-            />
-            <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 transactions?.slice().sort(getComparator(order, orderBy)) */}
-              {filteredTransactions?.length ?
-                stableSort(filteredTransactions, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    return (
-                      <Row key={index} row={row} />
-                    );
-                  })
-                : <></>
-              }
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[10, 15, 20, { label: 'All', value: -1 }]}
+    <Stack mt={2} width="100%" spacing={3}>
+      {/* Table Head */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        py={2}
+        px={2}
+        borderBottom={`1px solid ${COLOR_SECONDARY}`}
+        borderTop={`1px solid ${COLOR_SECONDARY}`}
+      >
+        <Box width="25%">
+          <Typography fontWeight={FONT_WEIGHT_NORMAL} fontSize={FONT_SIZE_BODY1_DESKTOP}>
+            Collections
+          </Typography>
+        </Box>
+        <Box width="10%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >Action</Typography>
+        </Box>
+        <Box width="7.5%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >From</Typography>
+        </Box>
+        <Box width="7.5%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >To</Typography>
+        </Box>
+        <Box width="10%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >Date</Typography>
+        </Box>
+        <Box width="10%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >Tx Value</Typography>
+        </Box>
+        <Box width="10%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >Total Fee</Typography>
+        </Box>
+        <Box width="10%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >Net</Typography>
+        </Box>
+        <Box width="10%">
+          <Typography
+            fontWeight={FONT_WEIGHT_NORMAL}
+            fontSize={FONT_SIZE_BODY1_DESKTOP}
+          >P/L</Typography>
+        </Box>
+      </Stack>
 
-                  count={filteredTransactions?.length || 0}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      'aria-label': 'rows per page',
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </Box>
+      {
+        filteredTransactions?.length > 0 && filteredTransactions.map((row, index) => (
+          <DataRow key={index} row={row} />
+        ))
+      }
+    </Stack>
   );
 }

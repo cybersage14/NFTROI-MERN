@@ -286,6 +286,7 @@ export default function HoldingTable({ nfts }) {
         </Box>
       </Stack>
 
+      {/* Table body */}
       {
         nfts?.length &&
         stableSort(nfts, getComparator(order, orderBy))
@@ -390,6 +391,7 @@ export default function HoldingTable({ nfts }) {
           ))
       }
 
+      {/* Pagination */}
       {
         nfts?.length > 0 && (
           <Stack direction="row" justifyContent="end">
