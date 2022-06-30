@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Web3 from 'web3';
 // material
 import {
     Stack, Grid, Typography, Icon as MuiIcon, Box, IconButton
@@ -26,8 +25,6 @@ import {
     PrimaryStack,
 } from '../../components/customComponents';
 import { shortAddress } from '../../lib/block';
-
-const mainnet = 'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
 
 const FeeItem = ({ title, percent, icon, value }) => {
     return (

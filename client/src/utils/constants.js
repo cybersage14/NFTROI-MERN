@@ -11,6 +11,7 @@ export const COLOR_ERROR = '#FF4A4A';
 export const COLOR_ERROR_SECONDARY = '#E66667';
 export const COLOR_WHITE = '#FFFFFF';
 export const COLOR_WHITE_OPACITY_TEN = 'rgba(255, 255, 255, 0.1)';
+export const COLOR_WHITE_OPACITY_ONE = 'rgba(255, 255, 255, 0.01)';
 export const COLOR_BLACK = '#000000';
 export const COLOR_SECONDARY = '#252525';
 export const COLOR_SECONDARY_DARK = '#121212';
@@ -20,6 +21,10 @@ export const COLOR_BORDER_GRADIENT_BOTTOM = '#131315';
 export const COLOR_BORDER_GRADIENT_TOP = 'rgba(255, 255, 255, 0.2)';
 export const COLOR_BG_VITEROUS_GRADIENT_TOP = '#FFFFFF';
 export const COLOR_BG_VITEROUS_GRADIENT_BOTTOM = '#90B7FF';
+
+export const BLUR_LOW = 'blur(25px)';
+export const BLUR_MIDDLE = 'blur(50px)';
+export const BLUR_HIGH = 'blur(75px)';
 
 export const BORDER_RADIUS_TEXTFIELD = '8px';
 

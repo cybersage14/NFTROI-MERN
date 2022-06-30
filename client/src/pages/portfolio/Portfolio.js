@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { NotificationManager } from 'react-notifications';
 // material
-import { styled } from '@mui/material/styles';
 import {
     Card,
     Container,
@@ -23,7 +22,6 @@ import {
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 // components
-import Page from '../../components/Page';
 import Stat from './Stat';
 import Holding from './Holding';
 import Transaction from './Transaction';
@@ -38,9 +36,11 @@ import {
     PrimaryTextField
 } from '../../components/customComponents';
 import {
+    BLUR_LOW,
     COLOR_PRIMARY,
     COLOR_SECONDARY,
     COLOR_SECONDARY_BRIGHT,
+    COLOR_WHITE_OPACITY_ONE,
     FONT_SIZE_BODY1_DESKTOP,
     FONT_SIZE_BODY2_DESKTOP,
     FONT_SIZE_H2_DESKTOP,
@@ -48,6 +48,38 @@ import {
 } from '../../utils/constants';
 
 // ----------------------------------------------------------------------
+const InputWallet = ({ setWallet, addWallet, keyPress }) => (
+    <Box
+        py={10}
+        px={5}
+        borderRadius={2}
+        bgcolor={COLOR_WHITE_OPACITY_ONE}
+        border={`2px solid ${COLOR_SECONDARY}`}
+        sx={{
+            backdropFilter: BLUR_LOW
+        }}
+    >
+        <Grid
+            container
+            alignItems="stretch"
+            spacing={2}
+        >
+            <Grid item xs={10} md={10}>
+                <PrimaryTextField
+                    placeholder="Put your wallet address here"
+                    onChange={e => setWallet(e.target.value)}
+                    onKeyDown={keyPress}
+                    fullWidth
+                />
+            </Grid>
+            <Grid item xs={2} md={2}>
+                <PrimaryButton onClick={addWallet} sx={{ height: '100%' }} fullWidth>
+                    Analyse
+                </PrimaryButton>
+            </Grid>
+        </Grid>
+    </Box>
+);
 
 const TABS = [
     {
@@ -171,6 +203,12 @@ export default function Portfolio() {
 
     const closeAddForm = () => {
         setVisibleAddForm(false);
+    };
+
+    const keyPress = (e) => {
+        if (e.keyCode === 13) {
+            addWallet();
+        }
     };
 
     useEffect(() => {
@@ -303,6 +341,7 @@ export default function Portfolio() {
                                                         </InputAdornment>
                                                     )
                                                 }}
+                                                onKeyDown={keyPress}
                                                 onChange={e => setWallet(e.target.value)}
                                                 fullWidth
                                             />
@@ -378,25 +417,33 @@ export default function Portfolio() {
                                     <Button variant='contained' onClick={analyse}>Analyse</Button>
                                 </Stack> */}
                             {
-                                loading &&
-                                <Stack direction='row' justifyContent='center' alignItems='center'>
-                                    <CircularProgress />
-                                    <Typography variant="body1" color="white" sx={{ marginLeft: "15px" }}>Analysing now, please wait... </Typography>
-                                </Stack>
+                                loading ? (
+                                    <Stack direction='row' justifyContent='center' alignItems='center'>
+                                        <CircularProgress />
+                                        <Typography variant="body1" color="white" sx={{ marginLeft: "15px" }}>Analysing now, please wait... </Typography>
+                                    </Stack>
+                                ) : (
+                                    wallets.length > 0 ? sideItem === 'overview' ? (
+                                        <Stat selectedWallet={selectedWallet} />
+                                    ) : sideItem === 'holdings' ? (
+                                        <Holding />
+                                    ) : sideItem === 'transactions' ? (
+                                        <Transaction />
+                                    ) : (
+                                        <></>
+                                    ) : (
+                                        <InputWallet
+                                            setWallet={setWallet}
+                                            addWallet={addWallet}
+                                            keyPress={keyPress}
+                                        />
+                                    )
+                                )
+
                             }
-                            {
-                                sideItem === 'overview' && <Stat selectedWallet={selectedWallet} />
-                            }
-                            {
-                                sideItem === 'holdings' && <Holding />
-                            }
-                            {
-                                sideItem === 'transactions' && < Transaction />
-                            }
-                            {/* <CompareWallet infos={infos} /> */}
                         </Stack>
                     </Grid>
-                
+
                 </Grid>
             </Container>
             <Box
