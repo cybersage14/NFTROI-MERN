@@ -186,6 +186,7 @@ export default function Portfolio() {
                 sx={{ position: 'relative', zIndex: 30, pt: 10, pb: 20 }}
             >
                 <Grid container spacing={8}>
+
                     <Grid item xs={12} md={3}>
                         <Card sx={{ borderRadius: 1 }}>
                             <SecondaryList sx={{ pb: 0 }}>
@@ -359,7 +360,7 @@ export default function Portfolio() {
                                             <Icon icon="fa6-solid:clock-rotate-left" />
                                         </MuiIcon>
                                         <Typography fontSize={FONT_SIZE_H2_DESKTOP}>
-                                            Transactions
+                                            Transactions History
                                         </Typography>
                                     </Stack>
                                 )
@@ -395,6 +396,7 @@ export default function Portfolio() {
                             {/* <CompareWallet infos={infos} /> */}
                         </Stack>
                     </Grid>
+                
                 </Grid>
             </Container>
             <Box

@@ -148,7 +148,7 @@ const StateCard = ({ title, value, color, icon, subtitle }) => (
                                 <Box
                                     component="img"
                                     src={
-                                        color === COLOR_ERROR ? 'assets/images/tiny-graph-red.png' : 'assets/images/tiny-graph-green.png'
+                                        color === COLOR_ERROR ? 'assets/images/tiny-graph-red.svg' : 'assets/images/tiny-graph-green.svg'
                                     }
                                     alt=""
                                     mt={1}

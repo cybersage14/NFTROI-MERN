@@ -24,7 +24,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { visuallyHidden } from '@mui/utils';
 import { FormGroup, FormControlLabel, Checkbox, Stack, Avatar, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { StyledHeaderCell, StyledBodyCell, StyledTableRow } from '../StyledComponent';
 import { URL_TRANSACTION } from '../../utils/constants';
 

@@ -796,7 +796,6 @@ export const getTransaction = async (address) => {
   ///////         NFT
   let txDatas = await getFromMoralis(`https://deep-index.moralis.io/api/v2/${address}/nft/transfers?chain=eth&format=decimal&direction=both`)
 
-  console.log("nft transactions", txDatas);
   // console.log('buy transaction', contract, tokenId, tokenType)
   for (let i = 0; i < txDatas.length; i++) {
     // console.log('transaction', i)
