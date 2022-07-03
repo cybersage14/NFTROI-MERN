@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NotificationManager } from 'react-notifications';
-import { SecondaryButton, SecondaryMenu, SecondaryMenuItem } from '../../components/customComponents';
+import { SecondaryButton, SecondaryMenu, SecondaryMenuItem, ToolbarWithoutPX } from '../../components/customComponents';
 import { COLOR_SECONDARY_BRIGHT, PATH_CONVERTER } from '../../utils/constants';
 import { setWallet } from '../../actions/manager';
 import { ArrowDropUp } from '@mui/icons-material';
@@ -133,7 +133,7 @@ export default function MainTopNavbar() {
         py: { md: 1 },
       }}>
       <Container maxWidth="xl">
-        <Toolbar>
+        <ToolbarWithoutPX>
           {/* For Mobile */}
           <IconButton
             size="large"
@@ -257,7 +257,7 @@ export default function MainTopNavbar() {
           >
             0xe59DCf131
           </SecondaryButton> */}
-        </Toolbar>
+        </ToolbarWithoutPX>
       </Container>
     </AppBar>
   );

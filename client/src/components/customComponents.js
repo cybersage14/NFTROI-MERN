@@ -1,4 +1,13 @@
-import { Button, List, ListItemButton, Menu, MenuItem, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  List,
+  ListItemButton,
+  Menu,
+  MenuItem,
+  Stack,
+  TextField,
+  Toolbar
+} from "@mui/material";
 import { styled } from '@mui/material/styles';
 import {
   BORDER_RADIUS_TEXTFIELD,
@@ -68,4 +77,11 @@ export const SecondaryListItemButton = styled(ListItemButton)(({ theme }) => ({
 
 export const PrimaryStack = styled(Stack)(({ theme }) => ({
   backgroundImage: `linear-gradient(to right, ${COLOR_PRIMARY_GRADIENT_LEFT}, ${COLOR_PRIMARY_GRADIENT_RIGHT})`,
+}));
+
+export const ToolbarWithoutPX = styled(Toolbar)(({ theme }) => ({
+  '&.MuiToolbar-root': {
+    paddingLeft: 0,
+    paddingRight: 0
+  }
 }));

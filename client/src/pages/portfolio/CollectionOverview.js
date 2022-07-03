@@ -9,10 +9,11 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 // components
-import Page from '../../components/Page'
-import CollectionTable from './CollectionTable'
+import Page from '../../components/Page';
+import CollectionTable from './CollectionTable';
 // ----------------------------------------------------------------------
 import { getCollections } from '../../lib/block';
+import { COLOR_SECONDARY_BRIGHT, FONT_SIZE_BODY1_DESKTOP, FONT_SIZE_H1_DESKTOP, FONT_WEIGHT_BOLD, FONT_WEIGHT_NORMAL } from '../../utils/constants';
 
 const RootStyle = styled(Page)({
     height: '100%',
@@ -20,47 +21,56 @@ const RootStyle = styled(Page)({
 });
 
 export default function CollectionOverview() {
-    const [collections, setCollections] = useState([])
-    const [filteredCollections, setFilteredCollections] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [duration, setDuration] = useState(1)
+    const [collections, setCollections] = useState([]);
+    const [filteredCollections, setFilteredCollections] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [duration, setDuration] = useState(1);
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData();
+    }, []);
 
     const getData = async () => {
-        setLoading(true)
+        setLoading(true);
 
-        let collectionsData = await getCollections()
-        console.log('collections', collectionsData)
-        setCollections(collectionsData.map(collection => ({ ...collection, volume: collection.oneDayVolume })))
-        setFilteredCollections(collectionsData.map(collection => ({ ...collection, volume: collection.oneDayVolume })))
+        let collectionsData = await getCollections();
+        console.log('collections', collectionsData);
+        setCollections(collectionsData.map(collection => ({ ...collection, volume: collection.oneDayVolume })));
+        setFilteredCollections(collectionsData.map(collection => ({ ...collection, volume: collection.oneDayVolume })));
 
-        setLoading(false)
-    }
+        setLoading(false);
+    };
 
     const handleDurationChange = (event) => {
         setDuration(event.target.value);
         if (event.target.value === 1) {
-            setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.oneDayVolume })))
+            setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.oneDayVolume })));
         } else if (event.target.value === 7) {
-            setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.sevenDayVolume })))
+            setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.sevenDayVolume })));
         } else if (event.target.value === 30) {
-            setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.thirtyDayVolume })))
+            setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.thirtyDayVolume })));
         }
-    };  
+    };
 
     const handleSearchChange = (e) => {
         if (e.target.value.trim()) {
-            setFilteredCollections(collections.filter(collection=>collection.name.toLowerCase().includes(e.target.value.trim().toLowerCase())))
-        }else{
-            setFilteredCollections(collections)
+            setFilteredCollections(collections.filter(collection => collection.name.toLowerCase().includes(e.target.value.trim().toLowerCase())));
+        } else {
+            setFilteredCollections(collections);
         }
-    }
+    };
 
     return (
         <RootStyle title="nftroi" id="move_top">
+            <Container maxWidth="xl">
+                <Typography fontSize={FONT_SIZE_H1_DESKTOP} fontWeight={FONT_WEIGHT_NORMAL}>
+                    Collections
+                </Typography>
+                <Typography fontSize={FONT_SIZE_BODY1_DESKTOP} color={COLOR_SECONDARY_BRIGHT} mt={2}>
+                    The Top NFT Collections
+                </Typography>
+            </Container>
+
             <Container>
                 {
                     loading &&
