@@ -2496,7 +2496,7 @@ const getLastBuyValueBefore = async (contract, tokenId, date) => {
 export const getCollections = async () => {
   let collections = []
   let txDatas = await getFromBlockdaemon('https://ubiquity.api.blockdaemon.com/v1/nft/ethereum/mainnet/collections?')
-  console.log(txDatas)
+  console.log('# => txDatas', txDatas);
   for (let i = 0; i < txDatas.length; i++) {
     if (!txDatas[i].meta) {
       continue

@@ -14,7 +14,6 @@ import {
   ListItemButton,
   Stack,
   styled,
-  Toolbar,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NotificationManager } from 'react-notifications';
