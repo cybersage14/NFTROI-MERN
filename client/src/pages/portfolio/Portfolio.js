@@ -46,6 +46,7 @@ import {
     FONT_SIZE_H2_DESKTOP,
     FONT_SIZE_H3_DESKTOP
 } from '../../utils/constants';
+import SideTab from '../../components/SideTab';
 
 // ----------------------------------------------------------------------
 const InputWallet = ({ setWallet, addWallet, keyPress }) => (
@@ -107,7 +108,6 @@ export default function Portfolio() {
     const [loading, setLoading] = useState(false);
     const [sideItem, setSideItem] = useState('overview');
     const [wallet, setWallet] = useState('');
-    const [visibleAddForm, setVisibleAddForm] = useState(false);
     const [selectedWallet, setSelectedWallet] = useState('');
 
     useEffect(() => {
@@ -189,20 +189,11 @@ export default function Portfolio() {
         if (wallet.trim()) {
             handleAddTab(wallet);
         }
-        closeAddForm();
     };
 
     const handleClose = (e, tabId) => {
         // setAddWallet(wallets.filter(tab => tab !== tabId))
         setWallets(wallets.filter(tab => tab !== tabId));
-    };
-
-    const openAddForm = () => {
-        setVisibleAddForm(true);
-    };
-
-    const closeAddForm = () => {
-        setVisibleAddForm(false);
     };
 
     const keyPress = (e) => {
@@ -224,132 +215,17 @@ export default function Portfolio() {
                 sx={{ position: 'relative', zIndex: 30, pt: 10, pb: 20 }}
             >
                 <Grid container spacing={8}>
-
                     <Grid item xs={12} md={3}>
-                        <Card sx={{ borderRadius: 1 }}>
-                            <SecondaryList sx={{ pb: 0 }}>
-                                {/* Tabs */}
-                                {
-                                    TABS.map(tabItem => (
-                                        <ListItem key={tabItem.name}>
-                                            <SecondaryListItemButton
-                                                component={
-                                                    sideItem === tabItem.value ? PrimaryButton : SecondaryButton
-                                                }
-                                                sx={{
-                                                    borderRadius: 1,
-                                                    fontSize: FONT_SIZE_BODY1_DESKTOP,
-                                                    py: 1.5,
-                                                }}
-                                                onClick={() => setSideItem(tabItem.value)}
-                                            >
-                                                <ListItemIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
-                                                    <Icon icon={tabItem.icon} />
-                                                </ListItemIcon>
-                                                <ListItemText>{tabItem.name}</ListItemText>
-                                            </SecondaryListItemButton>
-                                        </ListItem>
-                                    ))
-                                }
-
-                                {/* Wallet addresses */}
-                                {
-                                    wallets.map(child => (
-                                        <ListItem
-                                            key={child}
-                                            sx={{
-                                                bgcolor: COLOR_SECONDARY,
-                                                pt: 2,
-                                            }}
-                                            secondaryAction={
-                                                <IconButton
-                                                    onClick={event => handleClose(event, child)}
-                                                >
-                                                    <MuiIcon
-                                                        sx={{
-                                                            fontSize: FONT_SIZE_BODY1_DESKTOP,
-                                                            color: COLOR_SECONDARY_BRIGHT
-                                                        }}
-                                                    >
-                                                        <Icon icon="charm:circle-cross" />
-                                                    </MuiIcon>
-                                                </IconButton>
-                                            }
-                                            onClick={() => setSelectedWallet(child)}
-                                        >
-                                            <ListItemIcon>
-                                                <Box
-                                                    component="img"
-                                                    src="assets/images/wallet.png"
-                                                    alt=""
-                                                    sx={{ borderRadius: '50%' }}
-                                                    width={30}
-                                                />
-                                            </ListItemIcon>
-                                            <ListItemText
-                                                fontSize={FONT_SIZE_BODY2_DESKTOP}
-                                                color={COLOR_SECONDARY}
-                                            >
-                                                {shortAddress(child)}
-                                            </ListItemText>
-                                        </ListItem>
-                                    ))
-                                }
-
-                                {/* Add new wallet button */}
-                                {
-                                    !visibleAddForm && (
-                                        <ListItem
-                                            sx={{
-                                                bgcolor: COLOR_SECONDARY,
-                                                py: 2,
-                                                borderBottomLeftRadius: 10,
-                                                borderBottomRightRadius: 10
-                                            }}
-                                        >
-                                            <ListItemButton onClick={openAddForm}>
-                                                <ListItemIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
-                                                    <Icon icon="fluent:add-square-24-filled" />
-                                                </ListItemIcon>
-                                                <ListItemText fontSize={FONT_SIZE_BODY1_DESKTOP}>
-                                                    ADD NEW WALLET
-                                                </ListItemText>
-                                            </ListItemButton>
-                                        </ListItem>
-                                    )
-                                }
-
-                                {/* Add new wallet form */}
-                                {
-                                    visibleAddForm && (
-                                        <ListItem
-                                            sx={{
-                                                bgcolor: COLOR_SECONDARY,
-                                                py: 3,
-                                                borderBottomLeftRadius: 10,
-                                                borderBottomRightRadius: 10
-                                            }}
-                                        >
-                                            <PrimaryTextField
-                                                placeholder="Put your wallet address here"
-                                                InputProps={{
-                                                    endAdornment: (
-                                                        <InputAdornment position="end">
-                                                            <PrimaryButton onClick={addWallet}>
-                                                                Add
-                                                            </PrimaryButton>
-                                                        </InputAdornment>
-                                                    )
-                                                }}
-                                                onKeyDown={keyPress}
-                                                onChange={e => setWallet(e.target.value)}
-                                                fullWidth
-                                            />
-                                        </ListItem>
-                                    )
-                                }
-                            </SecondaryList>
-                        </Card>
+                        <SideTab
+                            tabs={TABS}
+                            currentTab={sideItem}
+                            setCurrentTab={setSideItem}
+                            wallets={wallets}
+                            setWallet={setWallet}
+                            addWallet={addWallet}
+                            setSelectedWallet={setSelectedWallet}
+                            handleClose={handleClose}
+                        />
                     </Grid>
                     <Grid item xs={12} md={9}>
                         <Stack spacing={3}>
