@@ -5,20 +5,13 @@ import { useDispatch } from 'react-redux';
 import { NotificationManager } from 'react-notifications';
 // material
 import {
-    Card,
     Container,
     Stack,
     Grid,
     Typography,
     CircularProgress,
-    ListItem,
-    ListItemText,
-    ListItemIcon,
     Box,
     Icon as MuiIcon,
-    IconButton,
-    ListItemButton,
-    InputAdornment
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 // components
@@ -27,12 +20,9 @@ import Holding from './Holding';
 import Transaction from './Transaction';
 // ----------------------------------------------------------------------
 import { setStats, setNFTs, setTransactions } from '../../actions/manager';
-import { getNFTs, getTransaction, getEns, getAddressType, shortAddress } from '../../lib/block';
+import { getNFTs, getTransaction, getEns, getAddressType } from '../../lib/block';
 import {
-    SecondaryList,
     PrimaryButton,
-    SecondaryButton,
-    SecondaryListItemButton,
     PrimaryTextField
 } from '../../components/customComponents';
 import {
@@ -42,9 +32,7 @@ import {
     COLOR_SECONDARY_BRIGHT,
     COLOR_WHITE_OPACITY_ONE,
     FONT_SIZE_BODY1_DESKTOP,
-    FONT_SIZE_BODY2_DESKTOP,
     FONT_SIZE_H2_DESKTOP,
-    FONT_SIZE_H3_DESKTOP
 } from '../../utils/constants';
 import SideTab from '../../components/SideTab';
 
