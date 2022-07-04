@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 // material
 import { styled } from '@mui/material/styles';
 import {
-    Container, 
-    Stack, 
-    Box, 
-    Typography, 
+    Container,
+    Stack,
+    Box,
+    Typography,
     Icon as MuiIcon
 } from '@mui/material';
 import { Icon } from '@iconify/react';
@@ -95,8 +95,11 @@ export default function CollectionOverview() {
     }, [duration]);
 
     return (
-        <RootStyle title="nftroi" id="move_top">
-            <Container maxWidth="xl">
+        <Box position="relative" overflow="hidden" minHeight="91.5vh">
+            <Container
+                maxWidth="xl"
+                sx={{ position: 'relative', zIndex: 30, pt: 10, pb: 20 }}
+            >
                 <Typography fontSize={FONT_SIZE_H1_DESKTOP} fontWeight={FONT_WEIGHT_NORMAL}>
                     Collections
                 </Typography>
@@ -239,6 +242,36 @@ export default function CollectionOverview() {
                     }
                 </Stack>
             </Container>
-        </RootStyle>
+            <Box
+                component="img"
+                src="assets/images/wave-portfolio.svg"
+                alt=""
+                width="100%"
+                position="absolute"
+                top="20%"
+                zIndex={10}
+            />
+            <Box
+                component="img"
+                src="assets/images/gradient-portfolio-left.svg"
+                alt=""
+                width="100%"
+                height=""
+                position="absolute"
+                bottom={0}
+                left={0}
+                zIndex={20}
+            />
+            <Box
+                component="img"
+                src="assets/images/gradient-portfolio-right.svg"
+                alt=""
+                width="100%"
+                position="absolute"
+                bottom={0}
+                right={0}
+                zIndex={20}
+            />
+        </Box>
     );
 }
