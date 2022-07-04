@@ -3,7 +3,7 @@ import { Box, Container, Grid, Icon as MuiIcon, Stack, Typography, Avatar } from
 import { Icon } from '@iconify/react';
 import {
   COLOR_PRIMARY,
-  COLOR_SECONDARY,
+  COLOR_SECONDARY, 
   FONT_SIZE_BODY1_DESKTOP,
   FONT_SIZE_H3_DESKTOP,
   FONT_SIZE_H2_DESKTOP,
