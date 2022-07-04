@@ -7,6 +7,7 @@ import MainLayout from '../layouts/main';
 import LoadingScreen from '../components/LoadingScreen';
 import GuestGuard from '../guards/GuestGuard';
 import Home from '../pages/Home';
+import Explore from '../pages/Explore';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component) => (props) => {
@@ -92,6 +93,10 @@ export default function Router() {
         //   path: '/portfolio/compare',
         //   element: <CompareWallet />
         // },
+        {
+          path: '/explore',
+          element: <Explore />
+        }
       ]
     }
   ]);

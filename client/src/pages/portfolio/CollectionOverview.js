@@ -27,11 +27,6 @@ import {
 } from '../../utils/constants';
 import ButtonFilter from '../../components/ButtonFilters';
 
-const RootStyle = styled(Page)({
-    height: '100%',
-    paddingTop: '100px'
-});
-
 const FILTER_DATA_OF_TYPE = [
     {
         label: 'All',
