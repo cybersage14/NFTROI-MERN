@@ -1,16 +1,17 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Web3 from 'web3';
 // material
 import { styled } from '@mui/material/styles';
 import {
-    Container, Stack, Box, Typography, CircularProgress, Button, FormControl, Select, MenuItem, InputBase, Paper, IconButton
+    Container, 
+    Stack, 
+    Box, 
+    Typography, 
+    Icon as MuiIcon
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Icon } from '@iconify/react';
 // components
 import Page from '../../components/Page';
-import CollectionTable from './CollectionTable';
 // ----------------------------------------------------------------------
 import { getCollections } from '../../lib/block';
 import {
@@ -18,11 +19,9 @@ import {
     COLOR_INFO_BRIGHT,
     COLOR_SECONDARY,
     COLOR_SECONDARY_BRIGHT,
-    COLOR_WHITE,
     FONT_SIZE_BODY1_DESKTOP,
     FONT_SIZE_H1_DESKTOP,
     FONT_SIZE_H3_DESKTOP,
-    FONT_WEIGHT_BOLD,
     FONT_WEIGHT_NORMAL,
     VERIFIED
 } from '../../utils/constants';
@@ -70,10 +69,6 @@ export default function CollectionOverview() {
     const [duration, setDuration] = useState(1);
     const [verified, setVerified] = useState(VERIFIED);
 
-    useEffect(() => {
-        getData();
-    }, []);
-
     const getData = async () => {
         setLoading(true);
 
@@ -85,24 +80,19 @@ export default function CollectionOverview() {
         setLoading(false);
     };
 
-    const handleDurationChange = (event) => {
-        setDuration(event.target.value);
-        if (event.target.value === 1) {
+    useEffect(() => {
+        getData();
+    }, []);
+
+    useEffect(() => {
+        if (duration === 1) {
             setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.oneDayVolume })));
-        } else if (event.target.value === 7) {
+        } else if (duration === 7) {
             setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.sevenDayVolume })));
-        } else if (event.target.value === 30) {
+        } else if (duration === 30) {
             setFilteredCollections(collections.map(collection => ({ ...collection, volume: collection.thirtyDayVolume })));
         }
-    };
-
-    const handleSearchChange = (e) => {
-        if (e.target.value.trim()) {
-            setFilteredCollections(collections.filter(collection => collection.name.toLowerCase().includes(e.target.value.trim().toLowerCase())));
-        } else {
-            setFilteredCollections(collections);
-        }
-    };
+    }, [duration]);
 
     return (
         <RootStyle title="nftroi" id="move_top">
@@ -248,45 +238,6 @@ export default function CollectionOverview() {
                         ))
                     }
                 </Stack>
-            </Container>
-
-            <Container>
-                {
-                    loading &&
-                    <Stack direction='row' justifyContent='center' alignItems='center'>
-                        <CircularProgress />
-                        <Typography variant="body1" color="white" sx={{ marginLeft: "15px" }}>Analysing now, please wait... </Typography>
-                    </Stack>
-                }
-                <Stack direction='row' justifyContent='space-between'>
-                    <Paper
-                        sx={{ display: 'flex', alignItems: 'center', width: 400, height: 50 }}
-                    >
-                        <InputBase
-                            sx={{ ml: 1, flex: 1 }}
-                            placeholder="Search collections"
-                            inputProps={{ 'aria-label': 'search google maps' }}
-                            onChange={handleSearchChange}
-                        />
-                        <IconButton aria-label="search">
-                            <SearchIcon />
-                        </IconButton>
-                    </Paper>
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <Select
-                            value={duration}
-                            onChange={handleDurationChange}
-                            displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
-                        >
-                            <MenuItem value={1}>24H</MenuItem>
-                            <MenuItem value={7}>7D</MenuItem>
-                            <MenuItem value={30}>30D</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Stack>
-                <CollectionTable collections={filteredCollections} />
-
             </Container>
         </RootStyle>
     );
