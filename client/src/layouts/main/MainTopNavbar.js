@@ -212,7 +212,7 @@ export default function MainTopNavbar() {
               <List sx={{ mt: 2 }} onClick={() => setDrawerOpened(false)}>
                 {
                   ROUTES.map(route => (
-                    <ListItem key={route.path}>
+                    <ListItem key={route.name}>
                       <ListItemButton
                         sx={pathname === route.path ? {
                           color: 'white',
