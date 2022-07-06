@@ -11,6 +11,8 @@ import {
   InputAdornment
 } from "@mui/material";
 import { Icon } from '@iconify/react';
+import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router';
 import {
   PrimaryButton,
   PrimaryTextField,
@@ -29,8 +31,6 @@ import { shortAddress } from '../lib/block';
 
 export default function SideTab({
   tabs,
-  currentTab,
-  setCurrentTab,
   wallets,
   handleClose,
   setSelectedWallet,
@@ -38,6 +38,8 @@ export default function SideTab({
   setWallet
 }) {
   const [visibleAddForm, setVisibleAddForm] = useState(false);
+  const { tab } = useParams();
+  const navigate = useNavigate();
 
   const openAddForm = () => {
     setVisibleAddForm(true);
@@ -53,6 +55,10 @@ export default function SideTab({
     }
   };
 
+  const handleTab = (value) => {
+    navigate(`/tools/${value}`);
+  };
+
   return (
     <Card sx={{ borderRadius: 1 }}>
       <SecondaryList sx={{ pb: 0 }}>
@@ -62,14 +68,14 @@ export default function SideTab({
             <ListItem key={tabItem.name}>
               <SecondaryListItemButton
                 component={
-                  currentTab === tabItem.value ? PrimaryButton : SecondaryButton
+                  tab === tabItem.value ? PrimaryButton : SecondaryButton
                 }
                 sx={{
                   borderRadius: 1,
                   fontSize: FONT_SIZE_BODY1_DESKTOP,
                   py: 1.5,
                 }}
-                onClick={() => setCurrentTab(tabItem.value)}
+                onClick={() => handleTab(tabItem.value)}
               >
                 <ListItemIcon sx={{ fontSize: FONT_SIZE_H3_DESKTOP }}>
                   <Icon icon={tabItem.icon} />

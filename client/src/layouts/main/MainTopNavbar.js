@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Web3 from 'web3';
@@ -17,10 +17,15 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NotificationManager } from 'react-notifications';
-import { SecondaryButton, SecondaryMenu, SecondaryMenuItem, ToolbarWithoutPX } from '../../components/customComponents';
+import {
+  SecondaryButton,
+  SecondaryMenu,
+  SecondaryMenuItem,
+  ToolbarWithoutPX
+} from '../../components/customComponents';
 import { COLOR_SECONDARY_BRIGHT, PATH_CONVERTER } from '../../utils/constants';
 import { setWallet } from '../../actions/manager';
-import { ArrowDropUp } from '@mui/icons-material';
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 
 const ROUTES = [
   {
@@ -29,15 +34,66 @@ const ROUTES = [
   },
   {
     name: 'Portfolio',
-    path: '/portfolio'
+    children: [
+      {
+        name: 'Portfolio Tracker',
+        path: '/portfolio/portfolio-tracker'
+      },
+      {
+        name: 'Holdings',
+        path: '/portfolio/holdings'
+      },
+      {
+        name: 'Transactions',
+        path: '/portfolio/transactions'
+      }
+    ]
   },
   {
     name: 'Explore',
-    path: '/explore'
+    children: [
+      {
+        name: 'Overview',
+        path: '/explore/overview'
+      },
+      {
+        name: 'Nftroi Degens',
+        path: '/explore/nftroi-degens'
+      },
+      {
+        name: 'Top Celebs',
+        path: '/explore/top-celebs'
+      },
+      {
+        name: 'Most Profitable',
+        path: '/explore/most-profitable'
+      },
+      {
+        name: 'Highest Valued',
+        path: '/explore/highest-valued'
+      },
+      {
+        name: 'Biggest Flips',
+        path: '/explore/biggest-flips'
+      }
+    ]
   },
   {
     name: 'Collections',
     path: '/collections'
+  },
+  {
+    name: 'Tools',
+    children: [
+      {
+        name: 'Battle',
+        path: '/tools/battle'
+      },
+      {
+        name: 'Converter',
+        path: '/tools/converter'
+      }
+    ]
   }
 ];
 const CustomizedDrawer = styled(Drawer)`
@@ -56,8 +112,6 @@ export default function MainTopNavbar() {
   const [bgColorOfAppBar, setBgColorOfAppBar] = useState('rgba(10, 10, 10, 0)');
   const [initWeb3, setInitWeb3] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
 
   const toggleBgColorOfAppBar = () => {
     const scrolled = document.documentElement.scrollTop;
@@ -93,6 +147,7 @@ export default function MainTopNavbar() {
   };
 
   const handleToolsMenu = (e) => {
+    console.log('# e.currentTarget => ', e.currentTarget);
     setAnchorEl(e.currentTarget);
   };
 
@@ -180,61 +235,70 @@ export default function MainTopNavbar() {
 
           {
             ROUTES.map(route => (
-              <Button
-                key={route.path}
-                sx={pathname === route.path ? {
-                  mr: 4,
-                  fontWeight: 600,
-                  color: 'white',
-                  display: { xs: 'none', md: 'flex' }
-                } : {
-                  mr: 4,
-                  fontWeight: 400,
-                  color: COLOR_SECONDARY_BRIGHT,
-                  display: { xs: 'none', md: 'flex' }
-                }}
-                component={RouterLink}
-                to={route.path}
-              >
-                {route.name}
-              </Button>
+              <Fragment key={route.name}>
+                {
+                  route.path ? (
+                    <Button
+                      sx={pathname === route.path ? {
+                        mr: 4,
+                        fontWeight: 600,
+                        color: 'white',
+                        display: { xs: 'none', md: 'flex' }
+                      } : {
+                        mr: 4,
+                        fontWeight: 400,
+                        color: COLOR_SECONDARY_BRIGHT,
+                        display: { xs: 'none', md: 'flex' }
+                      }}
+                      component={RouterLink}
+                      to={route.path}
+                    >
+                      {route.name}
+                    </Button>
+                  ) : (
+                    <>
+                      <Button
+                        name={route.name}
+                        onClick={handleToolsMenu}
+                        sx={pathname === PATH_CONVERTER ? {
+                          mr: 4,
+                          fontWeight: 600,
+                          color: 'white',
+                          display: { xs: 'none', md: 'flex' }
+                        } : {
+                          mr: 4,
+                          fontWeight: 400,
+                          color: COLOR_SECONDARY_BRIGHT,
+                          display: { xs: 'none', md: 'flex' }
+                        }}
+                        endIcon={anchorEl?.name === route.name ? <ArrowDropDown /> : <ArrowDropUp />}
+                      >
+                        {route.name}
+                      </Button>
+                      <SecondaryMenu
+                        anchorEl={anchorEl}
+                        open={anchorEl?.name === route.name}
+                        onClose={() => setAnchorEl(null)}
+                      >
+                        {
+                          route.children.map(subRoute => (
+                            <SecondaryMenuItem
+                              key={subRoute.name}
+                              onClick={() => setAnchorEl(null)}
+                              component={RouterLink}
+                              to={subRoute.path}
+                            >
+                              {subRoute.name}
+                            </SecondaryMenuItem>
+                          ))
+                        }
+                      </SecondaryMenu>
+                    </>
+                  )
+                }
+              </Fragment>
             ))
           }
-
-          <Button
-            onClick={handleToolsMenu}
-            sx={pathname === PATH_CONVERTER ? {
-              mr: 4,
-              fontWeight: 600,
-              color: 'white',
-              display: { xs: 'none', md: 'flex' }
-            } : {
-              mr: 4,
-              fontWeight: 400,
-              color: COLOR_SECONDARY_BRIGHT,
-              display: { xs: 'none', md: 'flex' }
-            }}
-            endIcon={<ArrowDropUp />}
-          >
-            Tools
-          </Button>
-          <SecondaryMenu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={() => setAnchorEl(null)}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <SecondaryMenuItem
-              onClick={() => setAnchorEl(null)}
-              component={RouterLink}
-              to={PATH_CONVERTER}
-            >
-              Converter
-            </SecondaryMenuItem>
-          </SecondaryMenu>
 
           <Box flexGrow={1}>
             <Stack direction="row" justifyContent="center">

@@ -48,3 +48,6 @@ export const PATH_CONVERTER = '/converter';
 
 export const VERIFIED = 'verified';
 export const ALL = 'all';
+
+export const ICON_NAME_BATTLE = 'ri:sword-fill';
+export const ICON_NAME_CONVERT = 'ph:arrows-left-right-bold';

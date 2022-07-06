@@ -8,6 +8,8 @@ import LoadingScreen from '../components/LoadingScreen';
 import GuestGuard from '../guards/GuestGuard';
 import Home from '../pages/Home';
 import Explore from '../pages/Explore';
+import Tools from '../pages/Tools';
+import Battle from '../pages/Tools/Battle';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component) => (props) => {
@@ -96,6 +98,14 @@ export default function Router() {
         {
           path: '/explore',
           element: <Explore />
+        },
+        {
+          path: '/tools/:tab',
+          element: <Tools />,
+        },
+        {
+          path: '*',
+          element: <Navigate to="/" />
         }
       ]
     }
