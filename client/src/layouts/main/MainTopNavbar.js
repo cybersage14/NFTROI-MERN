@@ -6,12 +6,14 @@ import {
   AppBar,
   Box,
   Button,
+  Collapse,
   Container,
   Drawer,
   IconButton,
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   Stack,
   styled,
 } from '@mui/material';
@@ -25,7 +27,7 @@ import {
 } from '../../components/customComponents';
 import { COLOR_SECONDARY_BRIGHT, PATH_CONVERTER } from '../../utils/constants';
 import { setWallet } from '../../actions/manager';
-import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
+import { ArrowDropDown, ArrowDropUp, KeyboardArrowDown, KeyboardArrowRight, KeyboardArrowUp } from '@mui/icons-material';
 
 const ROUTES = [
   {
@@ -112,6 +114,7 @@ export default function MainTopNavbar() {
   const [bgColorOfAppBar, setBgColorOfAppBar] = useState('rgba(10, 10, 10, 0)');
   const [initWeb3, setInitWeb3] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openedMenu, setOpenedMenu] = useState('');
 
   const toggleBgColorOfAppBar = () => {
     const scrolled = document.documentElement.scrollTop;
@@ -149,6 +152,10 @@ export default function MainTopNavbar() {
   const handleToolsMenu = (e) => {
     console.log('# e.currentTarget => ', e.currentTarget);
     setAnchorEl(e.currentTarget);
+  };
+
+  const handleOpenedMenu = (routeName) => {
+    setOpenedMenu(routeName);
   };
 
   useEffect(() => {
@@ -209,24 +216,70 @@ export default function MainTopNavbar() {
                   <Box component="img" src="/assets/images/logo.png" width={40} />
                 </Button>
               </Stack>
-              <List sx={{ mt: 2 }} onClick={() => setDrawerOpened(false)}>
+              <List sx={{ mt: 2 }}>
                 {
                   ROUTES.map(route => (
-                    <ListItem key={route.name}>
-                      <ListItemButton
-                        sx={pathname === route.path ? {
-                          color: 'white',
-                          fontWeight: 600
-                        } : {
-                          color: COLOR_SECONDARY_BRIGHT,
-                          fontWeight: 400
-                        }}
-                        component={RouterLink}
-                        to={route.path}
-                      >
-                        {route.name}
-                      </ListItemButton>
-                    </ListItem>
+                    <Fragment key={route.name}>
+                      {
+                        route.path ? (
+                          <ListItem>
+                            <ListItemButton
+                              sx={pathname === route.path ? {
+                                color: 'white',
+                                fontWeight: 600
+                              } : {
+                                color: COLOR_SECONDARY_BRIGHT,
+                                fontWeight: 400
+                              }}
+                              component={RouterLink}
+                              to={route.path}
+                            >
+                              {route.name}
+                            </ListItemButton>
+                          </ListItem>
+                        ) : (
+                          <>
+                            <ListItem>
+                              <ListItemButton
+                                sx={{
+                                  color: COLOR_SECONDARY_BRIGHT,
+                                  fontWeight: 400
+                                }}
+                                onClick={() => handleOpenedMenu(route.name)}
+                              >
+                                {route.name}
+                              </ListItemButton>
+                              <ListItemIcon>
+                                {
+                                  openedMenu === route.name ? <KeyboardArrowDown /> : <KeyboardArrowRight />
+                                }
+                              </ListItemIcon>
+                            </ListItem>
+                            <Collapse in={openedMenu === route.name}>
+                              {
+                                route.children.map(subRoute => (
+                                  <ListItem key={subRoute.name}>
+                                    <ListItemButton
+                                      sx={pathname === subRoute.path ? {
+                                        color: 'white',
+                                        fontWeight: 600
+                                      } : {
+                                        color: COLOR_SECONDARY_BRIGHT,
+                                        fontWeight: 400
+                                      }}
+                                      component={RouterLink}
+                                      to={subRoute.path}
+                                    >
+                                      {subRoute.name}
+                                    </ListItemButton>
+                                  </ListItem>
+                                ))
+                              }
+                            </Collapse>
+                          </>
+                        )
+                      }
+                    </Fragment>
                   ))
                 }
               </List>
