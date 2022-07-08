@@ -87,7 +87,7 @@ export default function Explore() {
       </Container>
       <Box
         component="img"
-        src="assets/images/wave-portfolio.svg"
+        src="/assets/images/wave-portfolio.svg"
         alt=""
         width="100%"
         position="absolute"
@@ -96,7 +96,7 @@ export default function Explore() {
       />
       <Box
         component="img"
-        src="assets/images/gradient-portfolio-left.svg"
+        src="/assets/images/gradient-portfolio-left.svg"
         alt=""
         width="100%"
         height=""
@@ -107,7 +107,7 @@ export default function Explore() {
       />
       <Box
         component="img"
-        src="assets/images/gradient-portfolio-right.svg"
+        src="/assets/images/gradient-portfolio-right.svg"
         alt=""
         width="100%"
         position="absolute"

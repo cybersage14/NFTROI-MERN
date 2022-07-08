@@ -35,7 +35,7 @@ export default function HeroSection() {
         }
         break;
       case 'account':
-        navigate(`/portfolio/${address}`, { replace: true });
+        navigate(`/portfolio/portfolio-tracker/${address}`, { replace: true });
         break;
       case 'invalid':
         NotificationManager.error('Please input valid address');

@@ -50,18 +50,17 @@ export default function Router() {
           element: <Home />
         },
         {
-          path: '/portfolio',
+          path: '/portfolio/:tab',
           element:
             // <GuestGuard>
-            <Portfolio />
+            <Portfolio />,
           // </GuestGuard>
-        },
-        {
-          path: '/portfolio/:address',
-          element:
-            // <GuestGuard>
-            <Portfolio />
-          // </GuestGuard>
+          children: [
+            {
+              path: ':address',
+              element: <Portfolio />
+            }
+          ]
         },
         {
           path: '/nft/:address/:tokenId',

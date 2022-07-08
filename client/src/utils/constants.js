@@ -59,3 +59,6 @@ export const ICON_NAME_TOP_CELEBS = 'bxs:star';
 export const ICON_NAME_MOST_PROFITABLE = 'bi:file-earmark-bar-graph';
 export const ICON_NAME_HIGHEST_VALUED = 'foundation:graph-pie';
 export const ICON_NAME_BIGGEST_FLIPS = 'icon-park-solid:refresh-one';
+export const ICON_NAME_PORTFOLIO_TRACKER = 'clarity:wallet-solid';
+export const ICON_NAME_HOLDINGS = 'fa-solid:hand-holding-medical';
+export const ICON_NAME_TRANSACTIONS = 'fa6-solid:clock-rotate-left';

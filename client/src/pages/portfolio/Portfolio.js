@@ -35,46 +35,18 @@ import {
     FONT_SIZE_H2_DESKTOP,
 } from '../../utils/constants';
 import SideTab from '../../components/SideTab';
+import InputWallet from './InputWallet';
+import PortfolioTracker from './PortfolioTracker';
+import Holdings from './Holdings';
+import Transactions from './Transactions';
 
 // ----------------------------------------------------------------------
-const InputWallet = ({ setWallet, addWallet, keyPress }) => (
-    <Box
-        py={10}
-        px={5}
-        borderRadius={2}
-        bgcolor={COLOR_WHITE_OPACITY_ONE}
-        border={`2px solid ${COLOR_SECONDARY}`}
-        sx={{
-            backdropFilter: BLUR_LOW
-        }}
-    >
-        <Grid
-            container
-            alignItems="stretch"
-            spacing={2}
-        >
-            <Grid item xs={10} md={10}>
-                <PrimaryTextField
-                    placeholder="Put your wallet address here"
-                    onChange={e => setWallet(e.target.value)}
-                    onKeyDown={keyPress}
-                    fullWidth
-                />
-            </Grid>
-            <Grid item xs={2} md={2}>
-                <PrimaryButton onClick={addWallet} sx={{ height: '100%' }} fullWidth>
-                    Analyse
-                </PrimaryButton>
-            </Grid>
-        </Grid>
-    </Box>
-);
 
 const TABS = [
     {
         name: 'Portfolio Tracker',
         icon: 'clarity:wallet-solid',
-        value: 'overview'
+        value: 'portfolio-tracker'
     },
     {
         name: 'Holdings',
@@ -90,7 +62,7 @@ const TABS = [
 
 export default function Portfolio() {
     const dispatch = useDispatch();
-    const { address } = useParams();
+    const { tab, address } = useParams();
     const [wallets, setWallets] = useState([]);
     const [infos, setInfos] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -206,106 +178,46 @@ export default function Portfolio() {
                     <Grid item xs={12} md={3}>
                         <SideTab
                             tabs={TABS}
-                            currentTab={sideItem}
-                            setCurrentTab={setSideItem}
                             wallets={wallets}
                             setWallet={setWallet}
                             addWallet={addWallet}
                             setSelectedWallet={setSelectedWallet}
                             handleClose={handleClose}
+                            parentRoute="/portfolio"
                         />
                     </Grid>
                     <Grid item xs={12} md={9}>
-                        <Stack spacing={3}>
-                            {
-                                sideItem === 'overview' && (
-                                    <Stack direction="row" alignItems="center" spacing={3}>
-                                        <MuiIcon
-                                            sx={{
-                                                color: COLOR_PRIMARY,
-                                                fontSize: FONT_SIZE_H2_DESKTOP
-                                            }}
-                                        >
-                                            <Icon icon="clarity:wallet-solid" />
-                                        </MuiIcon>
-                                        <Typography fontSize={FONT_SIZE_H2_DESKTOP}>
-                                            Portfolio Tracker
-                                        </Typography>
-                                    </Stack>
-                                )
-                            }
-                            {
-                                sideItem === 'holdings' && (
-                                    <Stack direction="row" alignItems="center" spacing={3}>
-                                        <MuiIcon
-                                            sx={{
-                                                color: COLOR_PRIMARY,
-                                                fontSize: FONT_SIZE_H2_DESKTOP
-                                            }}
-                                        >
-                                            <Icon icon="fa-solid:hand-holding-medical" />
-                                        </MuiIcon>
-                                        <Typography fontSize={FONT_SIZE_H2_DESKTOP}>
-                                            Holdings
-                                        </Typography>
-                                    </Stack>
-                                )
-                            }
-                            {
-                                sideItem === 'transactions' && (
-                                    <Stack direction="row" alignItems="center" spacing={3}>
-                                        <MuiIcon
-                                            sx={{
-                                                color: COLOR_PRIMARY,
-                                                fontSize: FONT_SIZE_H2_DESKTOP
-                                            }}
-                                        >
-                                            <Icon icon="fa6-solid:clock-rotate-left" />
-                                        </MuiIcon>
-                                        <Typography fontSize={FONT_SIZE_H2_DESKTOP}>
-                                            Transactions History
-                                        </Typography>
-                                    </Stack>
-                                )
-                            }
-
-                            <Typography
-                                fontSize={FONT_SIZE_BODY1_DESKTOP}
-                                color={COLOR_SECONDARY_BRIGHT}
-                            >
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            </Typography>
-
-                            {/* <Stack direction={{ md: 'row', xs: 'column' }} spacing={1} justifyContent='center' alignItems="center">
-                                    <TabBar wallets={wallets} setWallets={setWallets} />
-                                    <Button variant='contained' onClick={analyse}>Analyse</Button>
-                                </Stack> */}
-                            {
-                                loading ? (
-                                    <Stack direction='row' justifyContent='center' alignItems='center'>
-                                        <CircularProgress />
-                                        <Typography variant="body1" color="white" sx={{ marginLeft: "15px" }}>Analysing now, please wait... </Typography>
-                                    </Stack>
-                                ) : (
-                                    wallets.length > 0 ? sideItem === 'overview' ? (
-                                        <Stat selectedWallet={selectedWallet} />
-                                    ) : sideItem === 'holdings' ? (
-                                        <Holding />
-                                    ) : sideItem === 'transactions' ? (
-                                        <Transaction />
-                                    ) : (
-                                        <></>
-                                    ) : (
-                                        <InputWallet
-                                            setWallet={setWallet}
-                                            addWallet={addWallet}
-                                            keyPress={keyPress}
-                                        />
-                                    )
-                                )
-
-                            }
-                        </Stack>
+                        {
+                            tab === 'portfolio-tracker' &&
+                            <PortfolioTracker
+                                loading={loading}
+                                selectedWallet={selectedWallet}
+                                wallets={wallets}
+                                setWallet={setWallet}
+                                addWallet={addWallet}
+                                keyPress={keyPress}
+                            />
+                        }
+                        {
+                            tab === 'holdings' &&
+                            <Holdings
+                                loading={loading}
+                                wallets={wallets}
+                                setWallet={setWallet}
+                                addWallet={addWallet}
+                                keyPress={keyPress}
+                            />
+                        }
+                        {
+                            tab === 'transactions' &&
+                            <Transactions
+                                loading={loading}
+                                wallets={wallets}
+                                setWallet={setWallet}
+                                addWallet={addWallet}
+                                keyPress={keyPress}
+                            />
+                        }
                     </Grid>
 
                 </Grid>
