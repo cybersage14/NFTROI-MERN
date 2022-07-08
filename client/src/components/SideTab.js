@@ -35,7 +35,8 @@ export default function SideTab({
   handleClose,
   setSelectedWallet,
   addWallet,
-  setWallet
+  setWallet,
+  parentRoute
 }) {
   const [visibleAddForm, setVisibleAddForm] = useState(false);
   const { tab } = useParams();
@@ -56,7 +57,7 @@ export default function SideTab({
   };
 
   const handleTab = (value) => {
-    navigate(`/tools/${value}`);
+    navigate(`${parentRoute}/${value}`);
   };
 
   return (

@@ -58,6 +58,7 @@ export default function Tools() {
               addWallet={addWallet}
               setSelectedWallet={setSelectedWallet}
               handleClose={handleClose}
+              parentRoute="/tools"
             />
           </Grid>
           <Grid item xs={12} md={9}>

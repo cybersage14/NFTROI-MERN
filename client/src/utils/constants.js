@@ -53,3 +53,9 @@ export const ALL = 'all';
 
 export const ICON_NAME_BATTLE = 'ri:sword-fill';
 export const ICON_NAME_CONVERT = 'ph:arrows-left-right-bold';
+export const ICON_NAME_OVERVIEW = 'simple-icons:dgraph';
+export const ICON_NAME_NFTROI_DEGENS = 'uis:bag';
+export const ICON_NAME_TOP_CELEBS = 'bxs:star';
+export const ICON_NAME_MOST_PROFITABLE = 'bi:file-earmark-bar-graph';
+export const ICON_NAME_HIGHEST_VALUED = 'foundation:graph-pie';
+export const ICON_NAME_BIGGEST_FLIPS = 'icon-park-solid:refresh-one';

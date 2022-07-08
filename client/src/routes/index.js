@@ -96,8 +96,8 @@ export default function Router() {
         //   element: <CompareWallet />
         // },
         {
-          path: '/explore',
-          element: <Explore />
+          path: '/explore/:tab',
+          element: <Explore />,
         },
         {
           path: '/tools/:tab',
