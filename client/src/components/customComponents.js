@@ -12,12 +12,14 @@ import { styled } from '@mui/material/styles';
 import {
   BORDER_RADIUS_TEXTFIELD,
   COLOR_BG_TEXTFIELD,
+  COLOR_BLUE,
   COLOR_BORDER_GRADIENT_BOTTOM,
   COLOR_BORDER_GRADIENT_TOP,
   COLOR_PRIMARY_GRADIENT_LEFT,
   COLOR_PRIMARY_GRADIENT_RIGHT,
   COLOR_SECONDARY,
-  COLOR_SECONDARY_BRIGHT
+  COLOR_SECONDARY_BRIGHT,
+  COLOR_TRANSPARENT
 } from "../utils/constants";
 
 export const PrimaryTextField = styled(TextField)(({ theme }) => ({
@@ -31,6 +33,35 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     border: 'none'
   }
 }));
+
+export const BattleTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: 'black',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: 'none',
+  },
+  '& .MuiOutlinedInput-root': {
+    backgroundColor: COLOR_TRANSPARENT,
+    border: 'none',
+    borderRadius: 10,
+    '&:hover fieldset': {
+      borderColor: COLOR_TRANSPARENT,
+    },
+    '&.Mui-focused fieldset': {
+      border: 'none',
+    },
+    '&.Mui-disabled fieldset': {
+      border: 'none',
+    },
+  },
+  '& .MuiFormHelperText-root': {
+    margin: '10px 0px'
+  },
+  '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+    borderColor: COLOR_TRANSPARENT
+  }
+});
 
 export const PrimaryButton = styled(Button)(({ theme }) => ({
   backgroundImage: `linear-gradient(to right, ${COLOR_PRIMARY_GRADIENT_LEFT}, ${COLOR_PRIMARY_GRADIENT_RIGHT})`,

@@ -21,6 +21,8 @@ export const COLOR_BORDER_GRADIENT_BOTTOM = '#131315';
 export const COLOR_BORDER_GRADIENT_TOP = 'rgba(255, 255, 255, 0.2)';
 export const COLOR_BG_VITEROUS_GRADIENT_TOP = '#FFFFFF';
 export const COLOR_BG_VITEROUS_GRADIENT_BOTTOM = '#90B7FF';
+export const COLOR_TRANSPARENT = 'rgba(0, 0, 0, 0)';
+export const COLOR_BLUE = '#1744e3';
 
 export const BLUR_LOW = 'blur(25px)';
 export const BLUR_MIDDLE = 'blur(50px)';

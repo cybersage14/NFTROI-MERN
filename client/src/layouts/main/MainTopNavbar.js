@@ -27,7 +27,12 @@ import {
 } from '../../components/customComponents';
 import { COLOR_SECONDARY_BRIGHT, PATH_CONVERTER } from '../../utils/constants';
 import { setWallet } from '../../actions/manager';
-import { ArrowDropDown, ArrowDropUp, KeyboardArrowDown, KeyboardArrowRight, KeyboardArrowUp } from '@mui/icons-material';
+import {
+  ArrowDropDown,
+  ArrowDropUp,
+  KeyboardArrowDown,
+  KeyboardArrowRight
+} from '@mui/icons-material';
 
 const ROUTES = [
   {
@@ -155,7 +160,11 @@ export default function MainTopNavbar() {
   };
 
   const handleOpenedMenu = (routeName) => {
-    setOpenedMenu(routeName);
+    if (routeName === openedMenu) {
+      setOpenedMenu('');
+    } else {
+      setOpenedMenu(routeName);
+    }
   };
 
   useEffect(() => {
