@@ -23,6 +23,7 @@ import {
 } from '../../../utils/constants';
 import ButtonFilter from '../../../components/ButtonFilters';
 import NftTab from './NftTab';
+import CurrencyTab from './CurrencyTab';
 
 const FILTER_DATA = [
   {
@@ -211,6 +212,7 @@ export default function Converter() {
             <Grid item xs={12} sm={2} md={3} />
             <Grid item xs={12} sm={8} md={6}>
               {tab === NFT && <NftTab initCurrencyList={CURRENCY_LIST} />}
+              {tab === CURRENCY && <CurrencyTab initCurrencyList={CURRENCY_LIST} />}
             </Grid>
             <Grid item xs={12} sm={2} md={3} />
           </Grid>

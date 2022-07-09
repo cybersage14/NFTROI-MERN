@@ -64,3 +64,5 @@ export const ICON_NAME_BIGGEST_FLIPS = 'icon-park-solid:refresh-one';
 export const ICON_NAME_PORTFOLIO_TRACKER = 'clarity:wallet-solid';
 export const ICON_NAME_HOLDINGS = 'fa-solid:hand-holding-medical';
 export const ICON_NAME_TRANSACTIONS = 'fa6-solid:clock-rotate-left';
+
+export const REGEX_NUMBER_VALID = /^[0-9]*\.?[0-9]*$/;

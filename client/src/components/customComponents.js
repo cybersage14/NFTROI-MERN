@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   List,
   ListItemButton,
@@ -31,6 +32,11 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none'
   }
+}));
+
+export const PrimaryBox = styled(Box)(({ theme }) => ({
+  background: `linear-gradient(${COLOR_BG_TEXTFIELD}, ${COLOR_BG_TEXTFIELD}) padding-box, linear-gradient(to top, ${COLOR_BORDER_GRADIENT_BOTTOM}, ${COLOR_BORDER_GRADIENT_TOP}) border-box`,
+  border: '1px solid transparent'
 }));
 
 export const BattleTextField = styled(TextField)({
