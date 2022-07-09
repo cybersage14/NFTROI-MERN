@@ -7,7 +7,7 @@ import {
   FONT_SIZE_BODY1_DESKTOP
 } from '../utils/constants';
 
-export default function ButtonFilter({ data, value, setValue }) {
+export default function ButtonFilter({ data, value, setValue, sx }) {
   return (
     <Stack
       direction="row"
@@ -15,6 +15,7 @@ export default function ButtonFilter({ data, value, setValue }) {
       p={1}
       border={`1px solid ${COLOR_SECONDARY}`}
       borderRadius={2}
+      sx={{ ...sx }}
     >
       {
         data.map(dataItem => (
@@ -37,8 +38,6 @@ export default function ButtonFilter({ data, value, setValue }) {
           </Box>
         ))
       }
-
-
     </Stack>
   );
 }

@@ -3,7 +3,7 @@ import { Box, Container, Grid } from "@mui/material";
 import SideTab from '../../components/SideTab';
 import { useParams } from 'react-router';
 import Battle from './Battle';
-import Converter from '../portfolio/Converter';
+import Converter from './Converter';
 
 const TABS = [
   {

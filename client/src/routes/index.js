@@ -9,7 +9,6 @@ import GuestGuard from '../guards/GuestGuard';
 import Home from '../pages/Home';
 import Explore from '../pages/Explore';
 import Tools from '../pages/Tools';
-import Battle from '../pages/Tools/Battle';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component) => (props) => {
@@ -83,13 +82,6 @@ export default function Router() {
             <Collections />
           // </GuestGuard>
         },
-        {
-          path: '/converter',
-          element:
-            // <GuestGuard>
-            <Converter />
-          // </GuestGuard>
-        },
         // {
         //   path: '/portfolio/compare',
         //   element: <CompareWallet />
@@ -121,4 +113,3 @@ const Portfolio = Loadable(lazy(() => import('../pages/portfolio/Portfolio')));
 const SingleAsset = Loadable(lazy(() => import('../pages/portfolio/SingleAsset')));
 const Collection = Loadable(lazy(() => import('../pages/portfolio/Collection')));
 const Collections = Loadable(lazy(() => import('../pages/portfolio/CollectionOverview')));
-const Converter = Loadable(lazy(() => import('../pages/portfolio/Converter')));

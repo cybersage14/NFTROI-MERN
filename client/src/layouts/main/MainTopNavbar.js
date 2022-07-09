@@ -22,8 +22,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { NotificationManager } from 'react-notifications';
 import {
   SecondaryButton,
-  SecondaryMenu,
-  SecondaryMenuItem,
   ToolbarWithoutPX
 } from '../../components/customComponents';
 import { COLOR_SECONDARY, COLOR_SECONDARY_BRIGHT, COLOR_WHITE, PATH_CONVERTER } from '../../utils/constants';
@@ -119,7 +117,6 @@ export default function MainTopNavbar() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [bgColorOfAppBar, setBgColorOfAppBar] = useState('rgba(10, 10, 10, 0)');
   const [initWeb3, setInitWeb3] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [openedMenu, setOpenedMenu] = useState('');
 
   const toggleBgColorOfAppBar = () => {
@@ -326,6 +323,7 @@ export default function MainTopNavbar() {
                       <Button
                         name={route.name}
                         onMouseOver={() => handleSubMenu(route.name)}
+                        onMouseLeave={handleCloseSubMenu}
                         sx={pathname === PATH_CONVERTER ? {
                           mr: 4,
                           fontWeight: 600,

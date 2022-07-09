@@ -110,7 +110,6 @@ export default function Home() {
           sx={{ display: { xs: 'none', md: 'block' } }}
         />
       </Box>
-      <MainBottomNavbar />
     </Box>
   );
 }
