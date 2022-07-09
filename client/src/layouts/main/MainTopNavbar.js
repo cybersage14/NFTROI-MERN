@@ -14,6 +14,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
+  ListItemText,
   Stack,
   styled,
 } from '@mui/material';
@@ -25,7 +26,7 @@ import {
   SecondaryMenuItem,
   ToolbarWithoutPX
 } from '../../components/customComponents';
-import { COLOR_SECONDARY_BRIGHT, PATH_CONVERTER } from '../../utils/constants';
+import { COLOR_SECONDARY, COLOR_SECONDARY_BRIGHT, COLOR_WHITE, PATH_CONVERTER } from '../../utils/constants';
 import { setWallet } from '../../actions/manager';
 import {
   ArrowDropDown,
@@ -154,9 +155,12 @@ export default function MainTopNavbar() {
     }
   };
 
-  const handleToolsMenu = (e) => {
-    console.log('# e.currentTarget => ', e.currentTarget);
-    setAnchorEl(e.currentTarget);
+  const handleSubMenu = (menuName) => {
+    setOpenedMenu(menuName);
+  };
+
+  const handleCloseSubMenu = () => {
+    setOpenedMenu('');
   };
 
   const handleOpenedMenu = (routeName) => {
@@ -318,10 +322,10 @@ export default function MainTopNavbar() {
                       {route.name}
                     </Button>
                   ) : (
-                    <>
+                    <Box position="relative">
                       <Button
                         name={route.name}
-                        onClick={handleToolsMenu}
+                        onMouseOver={() => handleSubMenu(route.name)}
                         sx={pathname === PATH_CONVERTER ? {
                           mr: 4,
                           fontWeight: 600,
@@ -333,29 +337,54 @@ export default function MainTopNavbar() {
                           color: COLOR_SECONDARY_BRIGHT,
                           display: { xs: 'none', md: 'flex' }
                         }}
-                        endIcon={anchorEl?.name === route.name ? <ArrowDropDown /> : <ArrowDropUp />}
+                        endIcon={openedMenu === route.name ? <ArrowDropDown /> : <ArrowDropUp />}
                       >
                         {route.name}
                       </Button>
-                      <SecondaryMenu
-                        anchorEl={anchorEl}
-                        open={anchorEl?.name === route.name}
-                        onClose={() => setAnchorEl(null)}
-                      >
-                        {
-                          route.children.map(subRoute => (
-                            <SecondaryMenuItem
-                              key={subRoute.name}
-                              onClick={() => setAnchorEl(null)}
-                              component={RouterLink}
-                              to={subRoute.path}
-                            >
-                              {subRoute.name}
-                            </SecondaryMenuItem>
-                          ))
-                        }
-                      </SecondaryMenu>
-                    </>
+                      {
+                        openedMenu === route.name && (
+                          <List
+                            sx={{
+                              position: 'absolute',
+                              top: 40,
+                              left: 0,
+                              background: COLOR_SECONDARY,
+                              borderRadius: 1,
+                              px: 0,
+                            }}
+                            onClose={handleCloseSubMenu}
+                          >
+                            {
+                              route.children.map(subRoute => (
+                                <ListItem
+                                  key={subRoute.name}
+                                  onClick={handleCloseSubMenu}
+                                  component={RouterLink}
+                                  to={subRoute.path}
+                                  sx={{ p: 0 }}
+                                >
+                                  <ListItemButton sx={{ px: 1 }}>
+                                    <ListItemText
+                                      primaryTypographyProps={{
+                                        fontSize: 12,
+                                        color: COLOR_WHITE,
+                                        sx: {
+                                          minWidth: 100
+                                        },
+                                        textAlign: 'center'
+                                      }}
+                                    >
+                                      {subRoute.name}
+                                    </ListItemText>
+                                  </ListItemButton>
+                                </ListItem>
+                              ))
+                            }
+                          </List>
+                        )
+                      }
+
+                    </Box>
                   )
                 }
               </Fragment>
