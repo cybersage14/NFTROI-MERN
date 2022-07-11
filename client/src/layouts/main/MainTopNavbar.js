@@ -323,7 +323,6 @@ export default function MainTopNavbar() {
                       <Button
                         name={route.name}
                         onMouseOver={() => handleSubMenu(route.name)}
-                        onMouseLeave={handleCloseSubMenu}
                         sx={pathname === PATH_CONVERTER ? {
                           mr: 4,
                           fontWeight: 600,
@@ -350,6 +349,7 @@ export default function MainTopNavbar() {
                               borderRadius: 1,
                               px: 0,
                             }}
+                            onMouseLeave={handleCloseSubMenu}
                             onClose={handleCloseSubMenu}
                           >
                             {
